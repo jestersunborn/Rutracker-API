@@ -1,5 +1,5 @@
 # rutracker-api
-This is a fork of https://github.com/nikityy/Rutracker-API with little bit more functionality.
+This is a fork of [Nikita Gusarov Rutracker-API](!https://github.com/nikityy/Rutracker-API) with little bit more functionality.
 
 
 ## Installing:
@@ -58,7 +58,7 @@ rutracker.addListener('error', () => {
 
 `login` - user was logged in
 
-`login-error` - username or email is wrong
+`login-error` - username or email are wrong
 
 `error` - problem with server
 
@@ -140,6 +140,9 @@ rutracker.getCategories(callback: function(response));
 ```
 
 ## Short API:
+```javascript
+rutracker.login(username: String, password: String);
+```
 ```javascript
 rutracker.search(query: String, callback: function(response));
 ```
