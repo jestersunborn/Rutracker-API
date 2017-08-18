@@ -6,7 +6,10 @@
   "scripts": {
     "test": "node test/test.js",
     "build": "gulp",
-    "start": "gulp watch"
+    "start": "gulp watch",
+    "deploy": "npm version patch && npm publish",
+    "minor-deploy": "npm version minor && npm publish",
+    "major-deploy": "npm version major && npm publish",
   },
   "keywords": [
     "rutracker",
