@@ -2,9 +2,11 @@
   "name": "rutracker-api-2",
   "version": "0.2.1",
   "description": "This is a fork of https://github.com/nikityy/Rutracker-API with little bit more functionality.",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/test.js",
+    "build": "gulp",
+    "start": "gulp watch"
   },
   "keywords": [
     "rutracker",
@@ -40,4 +42,14 @@
     }
   ],
   "directories": {},
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "colors": "^1.1.2",
+    "eslint": "^4.4.1",
+    "eslint-config-airbnb-base": "^11.3.1",
+    "eslint-plugin-import": "^2.7.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0"
+  }
 }
