@@ -91,9 +91,6 @@ Simple usage:
 ```javascript
 rutracker.search('Inception', (res) => {
   console.log(res);
-  /*
-
-  */
 })
 ```
 
