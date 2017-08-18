@@ -16,13 +16,13 @@ npm i rutracker-api-2 --save
 
 First of all you need to require `rutracker-api-2`:
 
-```
+```javascript
 const RutrackerAPI = require('rutracker-api-2');
 ```
 
 Then you need to be logged in:
 
-```
+```javascript
 const username = 'username';
 const password = 'password';
 
@@ -34,21 +34,21 @@ rutracker.login(username, password);
 ```
 
 If login was success:
-```
+```javascript
 rutracker.addListener('login', () => {
   // code
 });
 ```
 
 If username or email was wrong:
-```
+```javascript
 rutracker.addListener('login-error', () => {
   // code
 });
 ```
 
 If there is some problem with server:
-```
+```javascript
 rutracker.addListener('error', () => {
   // code
 });
@@ -66,10 +66,10 @@ rutracker.addListener('error', () => {
 ## API:
 
 #### Search by query:
-```
+```javascript
 rutracker.search(query: String, callback: function(response));
 ```
-```
+```javascript
 // query - String with query
 // callback - function which will be called after getting the results from server and those results will be provided inside this function
 // response:
@@ -88,7 +88,7 @@ rutracker.search(query: String, callback: function(response));
 
 Simple usage:
 
-```
+```javascript
 rutracker.search('Inception', (res) => {
   console.log(res);
   /*
@@ -98,15 +98,15 @@ rutracker.search('Inception', (res) => {
 ```
 
 If you want to get simple HTML, you need to use this part of code:
-```
+```javascript
 rutracker.parseData = false;
 ```
 
 #### Download:
-```
+```javascript
 rutracker.download(id: String, callback: function(response));
 ```
-```
+```javascript
 // id - id of torrent
 // callback - function which will be called after getting the results from server and those results will be provided inside this function
 // response - FileReadableStream
@@ -115,10 +115,10 @@ rutracker.download(id: String, callback: function(response));
 
 #### Getting full info about torrent:
 
-```
+```javascript
 rutracker.getFullInfo(id: String, callback: function(response));
 ```
-```
+```javascript
 // id - id of torrent
 // callback - function which will be called after getting the results from server and those results will be provided inside this function
 // response:
@@ -130,10 +130,10 @@ rutracker.getFullInfo(id: String, callback: function(response));
 ```
 
 #### Getting categories:
-```
+```javascript
 rutracker.getCategories(callback: function(response));
 ```
-```
+```javascript
 // callback - function which will be called after getting the results from server and those results will be provided inside this function
 // response:
 [{
