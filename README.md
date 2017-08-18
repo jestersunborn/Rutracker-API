@@ -4,12 +4,12 @@ This is a fork of [Nikita Gusarov Rutracker-API](https://github.com/nikityy/Rutr
 
 ## Installing:
 
-```
-npm i rutracker-api-2
+```bash
+npm install rutracker-api-2
 ```
 or use this if you want to include the `rutracker-api-2` inside of the dependencies section of your `package.json`
-```
-npm i rutracker-api-2 --save
+```bash
+npm install rutracker-api-2 --save
 ```
 
 ## Using:
@@ -56,7 +56,7 @@ rutracker.addListener('error', () => {
 
 ## Testing:
 First of all you need to enter you `username` and `password` from rutracker in `./test/config.json` file
-```
+```json
 {
   "username": "username",
   "password": "********"
@@ -64,7 +64,7 @@ First of all you need to enter you `username` and `password` from rutracker in `
 ```
 
 after that run npm test command
-```
+```bash
 npm test
 ```
 
