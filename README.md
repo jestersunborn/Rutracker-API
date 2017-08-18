@@ -27,16 +27,21 @@ Then you need to be logged in:
 const username = 'username';
 const password = 'password';
 
-const rutracker = new RutrackerAPI({ username, password });
+const rutracker = new RutrackerAPI(username, password, parseData);
 
 // or using login method
-const rutracker = new RutrackerAPI();
+const rutracker = new RutrackerAPI(null, null, parseData);
 rutracker.login(username, password);
+```
+
+If you want to get simple HTML, you need to use this part of code:
+```javascript
+const rutracker = new RutrackerAPI(username, password, false);
 ```
 
 If login was success:
 ```javascript
-rutracker.addListener('login', () => {
+rutracker.addListener('login-success', () => {
   // code
 });
 ```
@@ -71,7 +76,7 @@ npm test
 
 ## Events:
 
-`login` - user was logged in
+`login-success` - user was logged in
 
 `login-error` - username or email are wrong
 
@@ -107,11 +112,6 @@ Simple usage:
 rutracker.search('Inception', (res) => {
   console.log(res);
 })
-```
-
-If you want to get simple HTML, you need to use this part of code:
-```javascript
-rutracker.parseData = false;
 ```
 
 #### Download:
