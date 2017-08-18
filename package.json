@@ -1,0 +1,43 @@
+{
+  "name": "rutracker-api-2",
+  "version": "0.2.1",
+  "description": "This is a fork of https://github.com/nikityy/Rutracker-API with little bit more functionality.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "rutracker",
+    "api"
+  ],
+  "author": {
+    "name": "Serhiy Boreyko"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^0.19.0",
+    "events": "^1.1.0",
+    "http": "0.0.0",
+    "querystring": "^0.2.0",
+    "windows-1251": "^0.1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jestersunborn/rutracker-api"
+  },
+  "bugs": {
+    "url": "https://github.com/jestersunborn/rutracker-api/issues"
+  },
+  "homepage": "https://github.com/jestersunborn/rutracker-api#readme",
+  "_npmUser": {
+    "name": "jestersunborn",
+    "email": "jestersunborn@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "jestersunborn",
+      "email": "jestersunborn@gmail.com"
+    }
+  ],
+  "directories": {},
+}
