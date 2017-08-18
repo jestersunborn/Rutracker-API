@@ -26,17 +26,13 @@ Then you need to be logged in:
 ```javascript
 const username = 'username';
 const password = 'password';
+const parseData = true; // 'true' by default, if you want to get raw HTML instead of object, you need to use 'false'
 
 const rutracker = new RutrackerAPI(username, password, parseData);
 
 // or using login method
 const rutracker = new RutrackerAPI(null, null, parseData);
 rutracker.login(username, password);
-```
-
-If you want to get simple HTML, you need to use this part of code:
-```javascript
-const rutracker = new RutrackerAPI(username, password, false);
 ```
 
 If login was success:
