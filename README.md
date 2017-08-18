@@ -133,19 +133,19 @@ rutracker.getCategories()
 
 ## Short API:
 ```javascript
-rutracker.login(username: String, password: String);
+.login(username: String, password: String): Promise;
 ```
 ```javascript
-rutracker.search(query: String, callback: function(response));
+.search(query: String): Promise;
 ```
 ```javascript
-rutracker.download(id: String, callback: function(response));
+.download(id: String): Promise;
 ```
 ```javascript
-rutracker.getFullInfo(id: String, callback: function(response));
+.getFullInfo(id: String): Promise;
 ```
 ```javascript
-rutracker.getCategories(callback: function(response));
+.getCategories(): Promise;
 ```
 
 ## Build:
