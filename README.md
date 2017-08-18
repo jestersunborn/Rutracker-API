@@ -12,6 +12,7 @@ or use this if you want to include the `rutracker-api-2` inside of the dependenc
 npm install rutracker-api-2 --save
 ```
 
+
 ## Using:
 
 First of all you need to require `rutracker-api-2`:
@@ -168,4 +169,10 @@ rutracker.getFullInfo(id: String, callback: function(response));
 ```
 ```javascript
 rutracker.getCategories(callback: function(response));
+```
+
+## Build:
+
+```bash
+npm run build
 ```
