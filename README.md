@@ -54,6 +54,20 @@ rutracker.addListener('error', () => {
 });
 ```
 
+## Testing:
+First of all you need to enter you `username` and `password` from rutracker in `./test/config.json` file
+```
+{
+  "username": "username",
+  "password": "********"
+}
+```
+
+after that run npm test command
+```
+npm test
+```
+
 ## Events:
 
 `login` - user was logged in
