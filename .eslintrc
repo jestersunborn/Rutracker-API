@@ -3,5 +3,11 @@
   "rules": {
     "no-console": "off",
     "import/prefer-default-export": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["app/index.js", "test/test.js"],
+      "excludedFiles": "build/index.js"
+    }
+  ]
 }

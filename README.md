@@ -26,34 +26,14 @@ Then you need to be logged in:
 ```javascript
 const username = 'username';
 const password = 'password';
-const parseData = true; // 'true' by default, if you want to get raw HTML instead of object, you need to use 'false'
 
-const rutracker = new RutrackerAPI(username, password, parseData);
+const rutracker = new RutrackerAPI();
 
-// or using login method
-const rutracker = new RutrackerAPI(null, null, parseData);
-rutracker.login(username, password);
-```
-
-If login was success:
-```javascript
-rutracker.addListener('login-success', () => {
-  // code
-});
-```
-
-If username or email was wrong:
-```javascript
-rutracker.addListener('login-error', () => {
-  // code
-});
-```
-
-If there is some problem with server:
-```javascript
-rutracker.addListener('error', () => {
-  // code
-});
+rutracker.login(username, password)
+  .then(() => console.log('Wow, cool. You are logged in!'))
+  .then(() => rutracker.search('Inception'))
+  .then((res) => console.log(res))
+  .catch((err) => console.error('Hmm, bad. Something wrong :('))
 ```
 
 ## Testing:
@@ -70,25 +50,12 @@ after that run npm test command
 npm test
 ```
 
-## Events:
-
-`login-success` - user was logged in
-
-`login-error` - username or email are wrong
-
-`error` - problem with server
-
-
 ## API:
 
-#### Search by query:
+#### .search(query: String);
+return Promise with response:
+
 ```javascript
-rutracker.search(query: String, callback: function(response));
-```
-```javascript
-// query - String with query
-// callback - function which will be called after getting the results from server and those results will be provided inside this function
-// response:
 [{
   state: String,
   id: String
@@ -105,31 +72,29 @@ rutracker.search(query: String, callback: function(response));
 Simple usage:
 
 ```javascript
-rutracker.search('Inception', (res) => {
-  console.log(res);
-})
+rutracker.search('Inception')
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => console.error(err));
 ```
 
-#### Download:
-```javascript
-rutracker.download(id: String, callback: function(response));
-```
-```javascript
-// id - id of torrent
-// callback - function which will be called after getting the results from server and those results will be provided inside this function
-// response - FileReadableStream
-```
+#### .download(id: String);
+return Promise with response: `FileReadableStream`
 
-
-#### Getting full info about torrent:
+Simple usage:
 
 ```javascript
-rutracker.getFullInfo(id: String, callback: function(response));
+rutracker.download('12345')
+  .then((frs) => {
+    console.log(frs);
+  })
+  .catch((err) => console.error(err));
 ```
+
+#### .getFullInfo(id: String);
+return Promise with response:
 ```javascript
-// id - id of torrent
-// callback - function which will be called after getting the results from server and those results will be provided inside this function
-// response:
 {
   img: String, // url to poster
   content: String, // Full description with some html tags
@@ -137,17 +102,33 @@ rutracker.getFullInfo(id: String, callback: function(response));
 }
 ```
 
-#### Getting categories:
+Simple usage:
+
 ```javascript
-rutracker.getCategories(callback: function(response));
+rutracker.getFullInfo('12345')
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => console.error(err));
 ```
+
+#### .getCategories();
+return Promise with response:
 ```javascript
-// callback - function which will be called after getting the results from server and those results will be provided inside this function
-// response:
 [{
   name: String,
   subCategories: [{ ... }]
 }]
+```
+
+Simple usage:
+
+```javascript
+rutracker.getCategories()
+  .then((categories) => {
+    console.log(categories);
+  })
+  .catch((err) => console.error(err));
 ```
 
 ## Short API:

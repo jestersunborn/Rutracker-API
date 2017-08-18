@@ -9,7 +9,7 @@
     "start": "gulp watch",
     "deploy": "npm version patch && npm publish",
     "minor-deploy": "npm version minor && npm publish",
-    "major-deploy": "npm version major && npm publish",
+    "major-deploy": "npm version major && npm publish"
   },
   "keywords": [
     "rutracker",
@@ -21,8 +21,8 @@
   "license": "MIT",
   "dependencies": {
     "cheerio": "^0.19.0",
-    "events": "^1.1.0",
     "http": "0.0.0",
+    "promise-polyfill": "6.0.2",
     "querystring": "^0.2.0",
     "windows-1251": "^0.1.2"
   },
