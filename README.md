@@ -138,3 +138,17 @@ rutracker.getCategories(callback: function(response));
   subCategories: [{ ... }]
 }]
 ```
+
+## Short API:
+```javascript
+rutracker.search(query: String, callback: function(response));
+```
+```javascript
+rutracker.download(id: String, callback: function(response));
+```
+```javascript
+rutracker.getFullInfo(id: String, callback: function(response));
+```
+```javascript
+rutracker.getCategories(callback: function(response));
+```
