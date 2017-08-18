@@ -1,18 +1,19 @@
-var http = require('http'),
-  querystring = require('querystring'),
-  cheerio = require('cheerio'),
-  windows1251 = require('windows-1251'),
-  EventEmitter = require('events');
+const http = require('http');
+const querystring = require('querystring');
+const cheerio = require('cheerio');
+const windows1251 = require('windows-1251');
+const EventEmitter = require('events');
 
 function RutrackerApi(data) {
   this.host = 'rutracker.org';
   this.login_path = '/forum/login.php';
   this.search_path = '/forum/tracker.php';
   this.download_path = '/forum/dl.php';
+  this.full_path = '/forum/viewtopic.php';
   this.cookie = null;
   this.parseData = true;
 
-  if (typeof data == 'object' && data.username && data.password) {
+  if (typeof data === 'object' && data.username && data.password) {
     this.username = data.username;
     this.password = data.password;
     this.login();
@@ -24,13 +25,13 @@ function RutrackerApi(data) {
 RutrackerApi.prototype = new EventEmitter();
 
 RutrackerApi.prototype.login = function(username, password) {
-  var postData = querystring.stringify({
+  const postData = querystring.stringify({
     login_username: username || this.username,
     login_password: password || this.password,
     login: 'Вход'
   });
 
-  var options = {
+  const options = {
     hostname: this.host,
     port: 80,
     path: this.login_path,
