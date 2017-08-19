@@ -27,7 +27,7 @@ const translateMonth = (month) => {
     case 'Авг': return 'Aug';
     case 'Сен': return 'Sep';
     case 'Окт': return 'Oct';
-    case 'Нбр': return 'Nov';
+    case 'Ноя': return 'Nov';
     case 'Дек': return 'Dec';
     default: return month;
   }
@@ -97,4 +97,26 @@ export const parseCategories = (html, deep) => {
     id: $(category).attr('id').replace('c-', ''),
     name: $(category).find('h3 a').text(),
   })).get();
+};
+
+export const sortBy = (data, by, direction) => {
+  switch (by) {
+    case 'size':
+    case 'seeds':
+    case 'leechs':
+    case 'downloads':
+      return direction
+        ? data.sort((a, b) => a[by] - b[by])
+        : data.sort((a, b) => b[by] - a[by]);
+    case 'date':
+      return direction
+        ? data.sort((a, b) => new Date(`${a.date.day}-${a.date.month}-${a.date.year}`) > new Date(`${b.date.day}-${b.date.month}-${b.date.year}`) ? 1 : -1)
+        : data.sort((a, b) => new Date(`${a.date.day}-${a.date.month}-${a.date.year}`) > new Date(`${b.date.day}-${b.date.month}-${b.date.year}`) ? -1 : 1);
+    case 'title':
+      return direction
+        ? data.sort((a, b) => a.title > b.title ? -1 : 1)
+        : data.sort((a, b) => a.title > b.title ? 1 : -1);
+    default:
+      return data;
+  }
 };

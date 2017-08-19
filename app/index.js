@@ -2,7 +2,12 @@ import Promise from 'promise-polyfill';
 import http from 'http';
 import querystring from 'querystring';
 import windows1251 from 'windows-1251';
-import { parseSearch, parseFullInfo, parseCategories } from './helpers';
+import {
+  parseSearch,
+  parseFullInfo,
+  parseCategories,
+  sortBy,
+} from './helpers';
 
 class RutrackerApi {
   constructor() {
@@ -52,7 +57,7 @@ class RutrackerApi {
   }
 
   // Search
-  search(q) {
+  search(q, by, direction) {
     return new Promise((resolve, reject) => {
       if (typeof this.cookie !== 'string') {
         reject(new Error('Unauthorized: Use `login` method first'));
@@ -78,7 +83,9 @@ class RutrackerApi {
             data += windows1251.decode(x, { mode: 'html' });
           });
           res.on('end', () => {
-            resolve(parseSearch(data, this.host));
+            const parsed = parseSearch(data, this.host);
+            const sorted = sortBy(parsed, by, direction);
+            resolve(sorted);
           });
         } else {
           reject(new Error(res.statusCode));
@@ -181,10 +188,6 @@ class RutrackerApi {
       req.end();
     });
   }
-
-  // getSubCategories(id) {
-  //
-  // }
 }
 
 export default RutrackerApi;

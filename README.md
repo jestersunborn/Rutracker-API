@@ -53,7 +53,7 @@ npm test
 
 ## API:
 
-#### .search(query: String);
+#### .search(query: String, sortBy: String, direction: Boolean);
 return Promise with response:
 
 ```javascript
@@ -78,6 +78,17 @@ return Promise with response:
   url: String
 }]
 ```
+
+`sortBy` can be:
+* `'size'`
+* `'date'`
+* `'title'`
+* `'seeds'`
+* `'leechs'`
+* `'downloads'`
+
+`direction` - from min to max if `true`
+
 Status can be:
  * `'approved'`
  * `'doubtfully'`
@@ -87,9 +98,9 @@ Status can be:
 Simple usage:
 
 ```javascript
-rutracker.search('Inception')
+rutracker.search('Inception', 'size', true)
   .then((res) => {
-    console.log(res);
+    console.log(res); // All matching by 'Inception' sort by 'size' from min to max
   })
   .catch((err) => console.error(err));
 ```
@@ -157,41 +168,12 @@ rutracker.getCategories(deep) // deep - true or false
   .catch((err) => console.error(err));
 ```
 
-#### .getSubCategories(id: String, deep: Boolean);
-return Promise with response:
-```javascript
-// deep is false
-[{
-  id: String,
-  name: String,
-}]
-// deep is true
-[{
-  id: String,
-  name: String,
-  subCategories: [{
-    id: String,
-    name: String,
-  }]
-}]
-```
-
-Simple usage:
-
-```javascript
-rutracker.getSubCategories(id, deep)
-  .then((subCategories) => {
-    console.log(subCategories);
-  })
-  .catch((err) => console.error(err));
-```
-
 ## Short API:
 ```javascript
 .login(username: String, password: String): Promise;
 ```
 ```javascript
-.search(query: String): Promise;
+.search(query: String, sortBy: String, direction: Boolean): Promise;
 ```
 ```javascript
 .download(id: String): Promise;
@@ -201,9 +183,6 @@ rutracker.getSubCategories(id, deep)
 ```
 ```javascript
 .getCategories(deep: Boolean): Promise;
-```
-```javascript
-.getSubCategories(id: String, deep: Boolean): Promise;
 ```
 
 ## Build:
