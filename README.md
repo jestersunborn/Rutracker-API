@@ -127,21 +127,61 @@ rutracker.getFullInfo('12345')
   .catch((err) => console.error(err));
 ```
 
-#### .getCategories();
+#### .getCategories(deep: Boolean);
 return Promise with response:
 ```javascript
+// deep is false
 [{
+  id: String,
   name: String,
-  subCategories: [{ ... }]
+}]
+// deep is true
+[{
+  id: String,
+  name: String,
+  subCategories: [{
+    id: String,
+    name: String,
+    // ...
+  }]
 }]
 ```
 
 Simple usage:
 
 ```javascript
-rutracker.getCategories()
+rutracker.getCategories(deep) // deep - true or false
   .then((categories) => {
     console.log(categories);
+  })
+  .catch((err) => console.error(err));
+```
+
+#### .getSubCategories(id: String, deep: Boolean);
+return Promise with response:
+```javascript
+// deep is false
+[{
+  id: String,
+  name: String,
+}]
+// deep is true
+[{
+  id: String,
+  name: String,
+  subCategories: [{
+    id: String,
+    name: String,
+  }]
+}]
+```
+
+Simple usage:
+
+```javascript
+rutracker.getSubCategories(id, deep)
+  .then((subCategories) => {
+    console.log(subCategories);
   })
   .catch((err) => console.error(err));
 ```
@@ -160,7 +200,10 @@ rutracker.getCategories()
 .getFullInfo(id: String): Promise;
 ```
 ```javascript
-.getCategories(): Promise;
+.getCategories(deep: Boolean): Promise;
+```
+```javascript
+.getSubCategories(id: String, deep: Boolean): Promise;
 ```
 
 ## Build:

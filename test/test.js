@@ -12,6 +12,6 @@ rutracker.login(username, password)
     console.log(' Now u r logged in '.bgGreen.black);
     console.log('-------------------'.green);
   })
-  .then(() => rutracker.getCategories())
+  .then(() => rutracker.getCategories(true))
   .then(res => console.log(res))
   .catch(err => console.error(err));

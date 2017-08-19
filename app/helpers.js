@@ -75,10 +75,24 @@ export const parseFullInfo = (html) => {
 };
 
 // Parse categories
-export const parseCategories = (html) => {
+export const parseCategories = (html, deep) => {
   const $ = cheerio.load(html);
   const wrap = $('#forums_wrap td:first-child');
   const categories = $(wrap).find('.category');
+  if (deep) {
+    return $(categories).map((_, category) => ({
+      id: $(category).attr('id').replace('c-', ''),
+      name: $(category).find('h3 a').text(),
+      subCategories: $(category).find('table.forums tr td:last-child').map((__, subCategory) => ({
+        id: $(subCategory).find('h4 a').attr('href').replace(/(.*)f=([0-9]*)$/g, `$2`),
+        name: $(subCategory).find('h4 a').text(),
+        subCategories: $(subCategory).find('.subforums .sf_title a').map((___, subSubCategory) => ({
+          id: $(subSubCategory).attr('href').replace(/(.*)f=([0-9]*)$/g, `$2`),
+          name: $(subSubCategory).text(),
+        })).get() || null,
+      })).get() || null,
+    })).get();
+  }
   return $(categories).map((index, category) => ({
     id: $(category).attr('id').replace('c-', ''),
     name: $(category).find('h3 a').text(),

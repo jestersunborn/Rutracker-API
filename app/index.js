@@ -153,7 +153,7 @@ class RutrackerApi {
     });
   }
 
-  getCategories() {
+  getCategories(deep) {
     return new Promise((resolve, reject) => {
       const path = `${this.indexPath}`;
       const options = {
@@ -171,7 +171,7 @@ class RutrackerApi {
             data += windows1251.decode(x, { mode: 'html' });
           });
           res.on('end', () => {
-            resolve(parseCategories(data));
+            resolve(parseCategories(data, deep));
           });
         } else {
           reject(new Error(res.statusCode));
@@ -181,6 +181,10 @@ class RutrackerApi {
       req.end();
     });
   }
+
+  // getSubCategories(id) {
+  //
+  // }
 }
 
 export default RutrackerApi;
