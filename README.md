@@ -1,6 +1,13 @@
 # rutracker-api
 This is a fork of [Nikita Gusarov Rutracker-API](https://github.com/nikityy/Rutracker-API) with little bit more functionality.
 
+* [Installing](https://github.com/jestersunborn/rutracker-api#installing)
+* [Using](https://github.com/jestersunborn/rutracker-api#using)
+* [Testing](https://github.com/jestersunborn/rutracker-api#testing)
+* [API](https://github.com/jestersunborn/rutracker-api#api)
+* [Short API](https://github.com/jestersunborn/rutracker-api#short-api)
+* [Build](https://github.com/jestersunborn/rutracker-api#build)
+
 ## Installing:
 
 ```bash
@@ -190,4 +197,8 @@ rutracker.getCategories(deep) // deep - true or false
 
 ```bash
 npm run build
+```
+or to run with watcher
+```bash
+npm start
 ```
