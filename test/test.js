@@ -12,6 +12,7 @@ rutracker.login(username, password)
     console.log(' Now u r logged in '.bgGreen.black);
     console.log('-------------------'.green);
   })
-  .then(() => rutracker.search('Inception', 'date', true))
-  .then(res => console.log(res.map(({ date: { day, month, year } }) => `${day}-${month}-${year}`)))
+  .then(() => {
+    // Write your test here...
+  })
   .catch(err => console.error(err));
