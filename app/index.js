@@ -1,90 +1,17 @@
 import Promise from 'promise-polyfill';
 import http from 'http';
 import querystring from 'querystring';
-import cheerio from 'cheerio';
 import windows1251 from 'windows-1251';
-
-const getStatus = (title) => {
-  switch (title) {
-    case 'проверено':
-      return 'approved';
-    case 'сомнительно':
-      return 'doubtfully';
-    case 'не проверено':
-      return 'not-approved';
-    case 'временная':
-      return 'temporary';
-    default:
-      return 'unnamed-status';
-  }
-};
-
-const translateMonth = (month) => {
-  switch (month) {
-    case 'Янв': return 'Jan';
-    case 'Фев': return 'Feb';
-    case 'Мар': return 'Mar';
-    case 'Апр': return 'Apr';
-    case 'Май': return 'May';
-    case 'Июн': return 'Jun';
-    case 'Июл': return 'Jul';
-    case 'Авг': return 'Aug';
-    case 'Сен': return 'Sep';
-    case 'Окт': return 'Oct';
-    case 'Нбр': return 'Nov';
-    case 'Дек': return 'Dec';
-    default: return month;
-  }
-};
-
-const formatDate = (date) => {
-  const regExp = /([0-9]{1,2})-(.*)-([0-9]{1,2})/g;
-  const day = date.replace(regExp, `$1`);
-  const month = translateMonth(date.replace(regExp, `$2`));
-  const year = `20${date.replace(regExp, `$3`)}`;
-  return { day, month, year };
-};
-
-// Parse search results
-const parseSearch = (html, host) => {
-  const $ = cheerio.load(html);
-
-  return $('#tor-tbl tbody').find('tr').map((_, track) => ({
-    id: $(track).find('td.t-title .t-title a').attr('data-topic_id'),
-    status: getStatus($(track).find('td:nth-child(2)').attr('title')),
-    title: $(track).find('td.t-title .t-title a').text(),
-    author: $(track).find('td.u-name .u-name a ').html(),
-    category: {
-      id: $(track).find('td.f-name .f-name a').attr('href').replace(/.*?f=([0-9]*)$/g, '$1'),
-      name: $(track).find('td.f-name .f-name a').text(),
-    },
-    size: +$(track).find('td.tor-size u').html(),
-    seeds: +$(track).find('b.seedmed').html(),
-    leechs: +$(track).find('td.leechmed b').html(),
-    downloads: +$(track).find('td.number-format').html(),
-    date: formatDate($(track).find('td:last-child p').text()), // Upload date
-    url: `http://${host}/forum/viewtopic.php?t=${$(track).find('td.t-title .t-title a').attr('data-topic_id')}`,
-  }))
-    .get()
-    .filter(x => x.id);
-};
-
-// Parse full info
-const parseFullInfo = (html) => {
-  const $ = cheerio.load(html);
-  const img = $('var.postImg').attr('title');
-  const body = $('.post_body .post-font-serif1').text();
-  const categories = $('.nav.w100.pad_2 a').map((index, a) => $(a).text()).get();
-  return { img, body, categories };
-};
+import { parseSearch, parseFullInfo, parseCategories } from './helpers';
 
 class RutrackerApi {
   constructor() {
     this.host = 'rutracker.org';
-    this.loginPath = '/forum/login.php';
-    this.searchPath = '/forum/tracker.php';
-    this.downloadPath = '/forum/dl.php';
-    this.fullPath = '/forum/viewtopic.php';
+    this.loginPath = '/forum/login.php'; // For login
+    this.searchPath = '/forum/tracker.php'; // For search
+    this.downloadPath = '/forum/dl.php'; // For download
+    this.fullPath = '/forum/viewtopic.php'; // For gettings full content
+    this.indexPath = '/forum/index.php'; // Fot categories
     this.cookie = null;
   }
 
@@ -216,6 +143,35 @@ class RutrackerApi {
           });
           res.on('end', () => {
             resolve(parseFullInfo(data));
+          });
+        } else {
+          reject(new Error(res.statusCode));
+        }
+      });
+      req.on('error', (err) => { reject(err); });
+      req.end();
+    });
+  }
+
+  getCategories() {
+    return new Promise((resolve, reject) => {
+      const path = `${this.indexPath}`;
+      const options = {
+        hostname: this.host,
+        port: 80,
+        path,
+        method: 'POST',
+        headers: { Cookie: this.cookie },
+      };
+      const req = http.request(options, (res) => {
+        if (res.statusCode.toString() === '200') {
+          let data = '';
+          res.setEncoding('binary');
+          res.on('data', (x) => {
+            data += windows1251.decode(x, { mode: 'html' });
+          });
+          res.on('end', () => {
+            resolve(parseCategories(data));
           });
         } else {
           reject(new Error(res.statusCode));

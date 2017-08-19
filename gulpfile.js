@@ -5,14 +5,14 @@ const babel = require('gulp-babel');
 const uglify = require('gulp-uglify');
 
 gulp.task('default', () =>
-  gulp.src('app/index.js')
+  gulp.src(['app/index.js', 'app/helpers.js'])
   .pipe(babel({ presets: ['env'] }))
   .pipe(uglify())
   .pipe(gulp.dest('build'))
 );
 
 gulp.task('watch', () =>
-  gulp.watch('app/index.js', ['default'])
+  gulp.watch('app/*', ['default'])
 );
 
 /* eslint-enable */
