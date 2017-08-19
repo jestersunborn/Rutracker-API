@@ -58,17 +58,31 @@ return Promise with response:
 
 ```javascript
 [{
-  state: String,
   id: String
-  category: String,
+  status: String,
   title: String,
   author: String,
-  size: String,
-  seeds: String,
-  leechs: String,
+  category: {
+    id: String,
+    name: String
+  },
+  size: Number,
+  seeds: Number,
+  leechs: Number,
+  downloads: Number,
+  date: {
+    day: String, // 1-31
+    month: String, // Jan - Dec
+    year: String, // YYYY
+  }
   url: String
 }]
 ```
+Status can be:
+ * `'approved'`
+ * `'doubtfully'`
+ * `'not-approved'`
+ * `'temporary'`
 
 Simple usage:
 

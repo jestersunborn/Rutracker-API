@@ -4,44 +4,69 @@ import querystring from 'querystring';
 import cheerio from 'cheerio';
 import windows1251 from 'windows-1251';
 
-const formatSize = (sizeInBytes) => {
-  const sizeInMegabytes = `${sizeInBytes / (1000 * 1000 * 1000)}`;
-  return `${sizeInMegabytes.slice(0, 4)} GB`;
+const getStatus = (title) => {
+  switch (title) {
+    case 'проверено':
+      return 'approved';
+    case 'сомнительно':
+      return 'doubtfully';
+    case 'не проверено':
+      return 'not-approved';
+    case 'временная':
+      return 'temporary';
+    default:
+      return 'unnamed-status';
+  }
+};
+
+const translateMonth = (month) => {
+  switch (month) {
+    case 'Янв': return 'Jan';
+    case 'Фев': return 'Feb';
+    case 'Мар': return 'Mar';
+    case 'Апр': return 'Apr';
+    case 'Май': return 'May';
+    case 'Июн': return 'Jun';
+    case 'Июл': return 'Jul';
+    case 'Авг': return 'Aug';
+    case 'Сен': return 'Sep';
+    case 'Окт': return 'Oct';
+    case 'Нбр': return 'Nov';
+    case 'Дек': return 'Dec';
+    default: return month;
+  }
+};
+
+const formatDate = (date) => {
+  const regExp = /([0-9]{1,2})-(.*)-([0-9]{1,2})/g;
+  const day = date.replace(regExp, `$1`);
+  const month = translateMonth(date.replace(regExp, `$2`));
+  const year = `20${date.replace(regExp, `$3`)}`;
+  return { day, month, year };
 };
 
 // Parse search results
 const parseSearch = (html, host) => {
-  const $ = cheerio.load(html, { decodeEntities: false });
-  let tracks = $('#tor-tbl tbody').find('tr');
-  const results = [];
-  const length = tracks.length;
+  const $ = cheerio.load(html);
 
-  // TODO: refactor this shit
-  for (let i = 0; i < length; i += 1) {
-    const document = tracks.find('td');
-    const state = document.next();
-    const category = state.next();
-    const title = category.next();
-    const author = title.next();
-    const size = author.next();
-    const seeds = size.next();
-    const leechs = seeds.next();
-
-    results.push({
-      state: state.attr('title'),
-      id: title.find('div a').attr('data-topic_id'),
-      category: category.find('.f-name a').html(),
-      title: title.find('div a ').html(),
-      author: author.find('div a ').html(),
-      size: formatSize(size.find('*').html()),
-      seeds: seeds.find('b').html(),
-      leechs: leechs.find('b').html(),
-      url: `http://${host}/forum/${title.find('div a').attr('href')}`,
-    });
-    tracks = tracks.next();
-  }
-
-  return results.filter(x => typeof x.id !== 'undefined');
+  return $('#tor-tbl tbody').find('tr').map((_, track) => ({
+    id: $(track).find('td.t-title .t-title a').attr('data-topic_id'),
+    status: getStatus($(track).find('td:nth-child(2)').attr('title')),
+    title: $(track).find('td.t-title .t-title a').text(),
+    author: $(track).find('td.u-name .u-name a ').html(),
+    category: {
+      id: $(track).find('td.f-name .f-name a').attr('href').replace(/.*?f=([0-9]*)$/g, '$1'),
+      name: $(track).find('td.f-name .f-name a').text(),
+    },
+    size: +$(track).find('td.tor-size u').html(),
+    seeds: +$(track).find('b.seedmed').html(),
+    leechs: +$(track).find('td.leechmed b').html(),
+    downloads: +$(track).find('td.number-format').html(),
+    date: formatDate($(track).find('td:last-child p').text()), // Upload date
+    url: `http://${host}/forum/viewtopic.php?t=${$(track).find('td.t-title .t-title a').attr('data-topic_id')}`,
+  }))
+    .get()
+    .filter(x => x.id);
 };
 
 // Parse full info
