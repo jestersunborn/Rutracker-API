@@ -1,5 +1,5 @@
 # rutracker-api
-This is a fork of [Nikita Gusarov Rutracker-API](https://github.com/nikityy/Rutracker-API) with little bit more functionality.
+> This is a fork of [Nikita Gusarov Rutracker-API](https://github.com/nikityy/Rutracker-API) with little bit more functionality.
 
 * [Installing](https://github.com/jestersunborn/rutracker-api#installing)
 * [Using](https://github.com/jestersunborn/rutracker-api#using)
