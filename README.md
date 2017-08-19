@@ -122,7 +122,10 @@ return Promise with response:
 {
   img: String, // url to poster
   body: String, // Full description with some html tags
-  categories: [String]
+  categories: [{
+    id: String,
+    name: String
+  }]
 }
 ```
 
