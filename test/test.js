@@ -12,7 +12,7 @@ rutracker.login(username, password)
     console.log(' Now u r logged in '.bgGreen.black);
   })
   .then(() => rutracker.search('Inception'))
-  .then((res) => {
-    console.log(res);
-  })
+  // .then(res => console.log(res))
+  .then(() => rutracker.getFullInfo('4676032'))
+  .then(res => console.log(res))
   .catch(err => console.error(err));

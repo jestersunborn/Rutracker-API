@@ -98,7 +98,7 @@ return Promise with response:
 ```javascript
 {
   img: String, // url to poster
-  content: String, // Full description with some html tags
+  body: String, // Full description with some html tags
   categories: [String]
 }
 ```

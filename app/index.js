@@ -9,6 +9,50 @@ const formatSize = (sizeInBytes) => {
   return `${sizeInMegabytes.slice(0, 4)} GB`;
 };
 
+// Parse search results
+const parseSearch = (html, host) => {
+  const $ = cheerio.load(html, { decodeEntities: false });
+  let tracks = $('#tor-tbl tbody').find('tr');
+  const results = [];
+  const length = tracks.length;
+
+  // TODO: refactor this shit
+  for (let i = 0; i < length; i += 1) {
+    const document = tracks.find('td');
+    const state = document.next();
+    const category = state.next();
+    const title = category.next();
+    const author = title.next();
+    const size = author.next();
+    const seeds = size.next();
+    const leechs = seeds.next();
+
+    results.push({
+      state: state.attr('title'),
+      id: title.find('div a').attr('data-topic_id'),
+      category: category.find('.f-name a').html(),
+      title: title.find('div a ').html(),
+      author: author.find('div a ').html(),
+      size: formatSize(size.find('*').html()),
+      seeds: seeds.find('b').html(),
+      leechs: leechs.find('b').html(),
+      url: `http://${host}/forum/${title.find('div a').attr('href')}`,
+    });
+    tracks = tracks.next();
+  }
+
+  return results.filter(x => typeof x.id !== 'undefined');
+};
+
+// Parse full info
+const parseFullInfo = (html) => {
+  const $ = cheerio.load(html);
+  const img = $('var.postImg').attr('title');
+  const body = $('.post_body .post-font-serif1').text();
+  const categories = $('.nav.w100.pad_2 a').map((index, a) => $(a).text()).get();
+  return { img, body, categories };
+};
+
 class RutrackerApi {
   constructor() {
     this.host = 'rutracker.org';
@@ -82,7 +126,7 @@ class RutrackerApi {
             data += windows1251.decode(x, { mode: 'html' });
           });
           res.on('end', () => {
-            resolve(this.parseSearch(data));
+            resolve(parseSearch(data, this.host));
           });
         } else {
           reject(new Error(res.statusCode));
@@ -124,40 +168,37 @@ class RutrackerApi {
     });
   }
 
-  // Parse search results
-  parseSearch(html) {
-    const $ = cheerio.load(html, { decodeEntities: false });
-    let tracks = $('#tor-tbl tbody').find('tr');
-    const results = [];
-    const length = tracks.length;
+  getFullInfo(id) {
+    return new Promise((resolve, reject) => {
+      if (!id) {
+        reject(new Error('Provide an ID, please'));
+      }
+      const path = `${this.fullPath}?t=${id}`;
+      const options = {
+        hostname: this.host,
+        port: 80,
+        path,
+        method: 'POST',
+        headers: { Cookie: this.cookie },
+      };
 
-    // TODO: refactor this shit
-    for (let i = 0; i < length; i += 1) {
-      const document = tracks.find('td');
-      const state = document.next();
-      const category = state.next();
-      const title = category.next();
-      const author = title.next();
-      const size = author.next();
-      const seeds = size.next();
-      const leechs = seeds.next();
-
-      results.push({
-        state: state.attr('title'),
-        id: title.find('div a').attr('data-topic_id'),
-        category: category.find('.f-name a').html(),
-        title: title.find('div a ').html(),
-        author: author.find('div a ').html(),
-        size: formatSize(size.find('*').html()),
-        seeds: seeds.find('b').html(),
-        leechs: leechs.find('b').html(),
-        url: `http://${this.host}/forum/${title.find('div a').attr('href')}`,
+      const req = http.request(options, (res) => {
+        if (res.statusCode.toString() === '200') {
+          let data = '';
+          res.setEncoding('binary');
+          res.on('data', (x) => {
+            data += windows1251.decode(x, { mode: 'html' });
+          });
+          res.on('end', () => {
+            resolve(parseFullInfo(data));
+          });
+        } else {
+          reject(new Error(res.statusCode));
+        }
       });
-      tracks = tracks.next();
-    }
-
-    // Handle case where search has no results
-    return results.filter(x => typeof x.id !== 'undefined');
+      req.on('error', (err) => { reject(err); });
+      req.end();
+    });
   }
 }
 
