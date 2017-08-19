@@ -1,6 +1,7 @@
 # rutracker-api
 This is a fork of [Nikita Gusarov Rutracker-API](https://github.com/nikityy/Rutracker-API) with little bit more functionality.
 
+## Status - ` in progress `
 
 ## Installing:
 
