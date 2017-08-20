@@ -123,7 +123,7 @@ export const sortBy = (data, by, direction) => {
 
 export const parseCaptcha = (html) => {
   const $ = cheerio.load(html);
-  return $('table.forumline .mrg_16 img')
+  return $('table.forumline .mrg_16 img').attr('src')
     ? {
         img: `http://${$('table.forumline .mrg_16 img').attr('src').replace('//', '')}`,
         capSid: $('input[name=cap_sid]').attr('value'),
