@@ -4,7 +4,8 @@
     "no-console": "off",
     "import/prefer-default-export": "off",
     "quotes": "off",
-    "no-confusing-arrow": "off"
+    "no-confusing-arrow": "off",
+    "indent": "off"
   },
   "overrides": [
     {

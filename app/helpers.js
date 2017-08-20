@@ -123,9 +123,11 @@ export const sortBy = (data, by, direction) => {
 
 export const parseCaptcha = (html) => {
   const $ = cheerio.load(html);
-  return {
-    img: `http://${$('table.forumline .mrg_16 img').attr('src').replace('//', '')}`,
-    capSid: $('input[name=cap_sid]').attr('value'),
-    code: $('input[name=cap_sid] + input').attr('name'),
-  };
+  return $('table.forumline .mrg_16 img')
+    ? {
+        img: `http://${$('table.forumline .mrg_16 img').attr('src').replace('//', '')}`,
+        capSid: $('input[name=cap_sid]').attr('value'),
+        code: $('input[name=cap_sid] + input').attr('name'),
+      }
+    : null;
 };

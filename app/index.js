@@ -57,13 +57,19 @@ class RutrackerApi {
   login(username, password, answer) {
     return new Promise((resolve, reject) => {
       // User data
-      const postData = querystring.stringify({
-        login_username: username,
-        login_password: password,
-        login: 'Вход',
-        cap_sid: this.captcha.capSid,
-        [this.captcha.code]: answer,
-      });
+      const postData = answer
+        ? querystring.stringify({
+            login_username: username,
+            login_password: password,
+            login: 'Вход',
+            cap_sid: this.captcha.capSid,
+            [this.captcha.code]: answer,
+          })
+        : querystring.stringify({
+            login_username: username,
+            login_password: password,
+            login: 'Вход',
+          });
 
       const options = {
         hostname: this.host,
