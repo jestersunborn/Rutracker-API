@@ -1,6 +1,6 @@
 {
   "name": "rutracker-api-2",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "This is a fork of https://github.com/nikityy/Rutracker-API with little bit more functionality.",
   "main": "build/index.js",
   "scripts": {
