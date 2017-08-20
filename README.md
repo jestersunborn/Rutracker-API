@@ -58,6 +58,16 @@ npm test
 
 ## API:
 
+#### .getCaptcha();
+return Promise with response:
+```javascript
+{
+  img: String, // img with captcha
+  capSid: String, // cap_sid fields for request
+  code: String, // e.g. 'cap_code_e793560e065d593438e45cf00b5c434f'
+}
+```
+
 #### .search(query: String, sortBy: String, direction: Boolean);
 return Promise with response:
 
@@ -179,6 +189,9 @@ rutracker.getCategories(deep) // deep - true or false
 ## Short API:
 ```javascript
 .login(username: String, password: String): Promise;
+```
+```javascript
+.getCaptcha(): Promise;
 ```
 ```javascript
 .search(query: String, sortBy: String, direction: Boolean): Promise;

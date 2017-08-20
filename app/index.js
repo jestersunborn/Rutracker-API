@@ -7,6 +7,7 @@ import {
   parseFullInfo,
   parseCategories,
   sortBy,
+  parseCaptcha,
 } from './helpers';
 
 class RutrackerApi {
@@ -18,6 +19,36 @@ class RutrackerApi {
     this.fullPath = '/forum/viewtopic.php'; // For gettings full content
     this.indexPath = '/forum/index.php'; // Fot categories
     this.cookie = null;
+  }
+
+  getCaptcha() {
+    return new Promise((resolve, reject) => {
+      const options = {
+        hostname: this.host,
+        port: 80,
+        path: this.loginPath,
+        method: 'GET',
+        headers: {},
+      };
+
+      const req = http.request(options, (res) => {
+        if (res.statusCode.toString() === '200') {
+          let data = '';
+          res.setEncoding('binary');
+          res.on('data', (x) => {
+            data += windows1251.decode(x, { mode: 'html' });
+          });
+          res.on('end', () => {
+            const captcha = parseCaptcha(data);
+            resolve(captcha);
+          });
+        } else {
+          reject(new Error(res.statusCode));
+        }
+      });
+      req.on('error', (err) => { reject(err); });
+      req.end();
+    });
   }
 
   // Login method
