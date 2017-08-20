@@ -25,8 +25,8 @@ class RutrackerApi {
     return new Promise((resolve, reject) => {
       // User data
       const postData = querystring.stringify({
-        login_username: username || this.username,
-        login_password: password || this.password,
+        login_username: username,
+        login_password: password,
         login: 'Вход',
       });
 
@@ -46,7 +46,7 @@ class RutrackerApi {
           this.cookie = res.headers['set-cookie'][0];
           resolve();
         } else {
-          reject();
+          reject(`Error with status: ${res.statusCode}`);
         }
       });
 
