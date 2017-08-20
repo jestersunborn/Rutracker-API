@@ -195,10 +195,6 @@ rutracker.getCategories(deep) // deep - true or false
   .catch((err) => console.error(err));
 ```
 
-#### .logout();
-> use this method for clear cookies, this method will return Promise;
-
-
 ## Short API:
 ```javascript
 .login(username: String, password: String, answer: String): Promise;
@@ -217,9 +213,6 @@ rutracker.getCategories(deep) // deep - true or false
 ```
 ```javascript
 .getCategories(deep: Boolean): Promise;
-```
-```javascript
-.logout(): Promise;
 ```
 
 ## Build:

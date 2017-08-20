@@ -9,7 +9,6 @@ import {
   parseCategories,
   sortBy,
   parseCaptcha,
-  deleteAllCookies,
 } from './helpers';
 
 class RutrackerApi {
@@ -21,7 +20,6 @@ class RutrackerApi {
     this.fullPath = '/forum/viewtopic.php'; // For gettings full content
     this.indexPath = '/forum/index.php'; // Fot categories
     this.cookie = null;
-    document.cookie = null;
   }
 
   getCaptcha() {
@@ -52,6 +50,17 @@ class RutrackerApi {
       });
       req.on('error', (err) => { reject(err); });
       req.end();
+    });
+  }
+
+  setCookie(cookie) {
+    return new Promise((resolve, reject) => {
+      try {
+        this.cookie = cookie;
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
     });
   }
 
@@ -87,8 +96,7 @@ class RutrackerApi {
       const req = http.request(options, (res) => {
         if (res.statusCode.toString() === '302') {
           this.cookie = res.headers['set-cookie'][0];
-          document.cookie = res.headers['set-cookie'][0];
-          resolve();
+          resolve(this.cookie);
         } else {
           reject(`Error with status: ${res.statusCode}`);
         }
@@ -230,18 +238,6 @@ class RutrackerApi {
       });
       req.on('error', (err) => { reject(err); });
       req.end();
-    });
-  }
-
-  logout() {
-    return new Promise((resolve, reject) => {
-      if (typeof this.cookie === 'string') {
-        deleteAllCookies();
-        this.cookie = null;
-        resolve();
-      } else {
-        reject(new Error('You are already logged out'));
-      }
     });
   }
 }
