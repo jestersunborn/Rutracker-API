@@ -35,7 +35,16 @@ const password = 'password';
 
 const rutracker = new RutrackerAPI();
 
-rutracker.login(username, password)
+rutracker.getCaptcha()
+  .then((res) => {
+    // do something with response
+    /*{
+      img: String,
+      code: String,
+      capSid: String
+    }*/
+  })
+  .then(() => rutracker.login(username, password, answer))
   .then(() => console.log('Wow, cool. You are logged in!'))
   .then(() => rutracker.search('Inception'))
   .then((res) => console.log(res))
@@ -188,7 +197,7 @@ rutracker.getCategories(deep) // deep - true or false
 
 ## Short API:
 ```javascript
-.login(username: String, password: String): Promise;
+.login(username: String, password: String, answer: String): Promise;
 ```
 ```javascript
 .getCaptcha(): Promise;

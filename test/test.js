@@ -7,8 +7,8 @@ const { username, password } = require('./config');
 
 const rutracker = new Rutracker();
 
-rutracker.getCaptcha()
-  .then((res) => {
-    console.log(res);
+rutracker.login(username, password)
+  .then(() => {
+    console.log(' OK '.bgGreen.black);
   })
   .catch(err => console.error(err));

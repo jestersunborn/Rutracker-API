@@ -2,6 +2,7 @@ import Promise from 'promise-polyfill';
 import http from 'http';
 import querystring from 'querystring';
 import windows1251 from 'windows-1251';
+
 import {
   parseSearch,
   parseFullInfo,
@@ -40,6 +41,7 @@ class RutrackerApi {
           });
           res.on('end', () => {
             const captcha = parseCaptcha(data);
+            this.captcha = captcha;
             resolve(captcha);
           });
         } else {
@@ -52,13 +54,15 @@ class RutrackerApi {
   }
 
   // Login method
-  login(username, password) {
+  login(username, password, answer) {
     return new Promise((resolve, reject) => {
       // User data
       const postData = querystring.stringify({
         login_username: username,
         login_password: password,
         login: 'Вход',
+        cap_sid: this.captcha.capSid,
+        [this.captcha.code]: answer,
       });
 
       const options = {
