@@ -96,7 +96,7 @@ class RutrackerApi {
       const req = http.request(options, (res) => {
         if (res.statusCode.toString() === '302') {
           this.cookie = res.headers['set-cookie'][0];
-          resolve(this.cookie);
+          resolve(res.headers['set-cookie'][0]);
         } else {
           reject(`Error with status: ${res.statusCode}`);
         }
