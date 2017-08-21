@@ -33,7 +33,10 @@ Then you need to be logged in:
 const username = 'username';
 const password = 'password';
 
-const rutracker = new RutrackerAPI();
+
+// You can provide cookie in constructor, e.g. You made login once, and now you do not want to do login again, you can save previous cookie and use them now
+// method .login return the cookie
+const rutracker = new RutrackerAPI(cookie);
 
 rutracker.getCaptcha()
   .then((res) => {

@@ -12,14 +12,14 @@ import {
 } from './helpers';
 
 class RutrackerApi {
-  constructor() {
+  constructor(cookie) {
     this.host = 'rutracker.org';
     this.loginPath = '/forum/login.php'; // For login
     this.searchPath = '/forum/tracker.php'; // For search
     this.downloadPath = '/forum/dl.php'; // For download
     this.fullPath = '/forum/viewtopic.php'; // For gettings full content
     this.indexPath = '/forum/index.php'; // Fot categories
-    this.cookie = null;
+    this.cookie = cookie || null;
   }
 
   getCaptcha() {
