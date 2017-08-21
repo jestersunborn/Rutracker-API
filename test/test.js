@@ -12,6 +12,6 @@ rutracker.login(username, password)
     console.log(' OK '.bgGreen.black);
     console.log(res);
   })
-  .then(() => rutracker.search('Inception', 'size', true))
-  // .then(res => console.log(res))
+  .then(() => rutracker.search('asfvhjkasg fgas', 'size', true))
+  .then(res => console.log(res))
   .catch(err => console.error(err));

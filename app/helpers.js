@@ -44,8 +44,8 @@ const formatDate = (date) => {
 // Parse search results
 export const parseSearch = (html, host) => {
   const $ = cheerio.load(html);
-
-  return $('#tor-tbl tbody').find('tr').map((_, track) => ({
+  const condition = $('#tor-tbl tbody').find('tr td:first-child').attr('colspan') === '10';
+  return !condition ? $('#tor-tbl tbody').find('tr').map((_, track) => ({
     id: $(track).find('td.t-title .t-title a').attr('data-topic_id'),
     status: getStatus($(track).find('td:nth-child(2)').attr('title')),
     title: $(track).find('td.t-title .t-title a').text(),
@@ -62,7 +62,7 @@ export const parseSearch = (html, host) => {
     url: `http://${host}/forum/viewtopic.php?t=${$(track).find('td.t-title .t-title a').attr('data-topic_id')}`,
   }))
     .get()
-    .filter(x => x.id);
+    .filter(x => x.id) : [];
 };
 
 // Parse full info
