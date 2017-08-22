@@ -48,8 +48,9 @@ export const parseSearch = (html, host) => {
   return !condition ? $('#tor-tbl tbody').find('tr').map((_, track) => ({
     id: $(track).find('td.t-title .t-title a').attr('data-topic_id'),
     status: getStatus($(track).find('td:nth-child(2)').attr('title')),
+    shortName: $(track).find('td.t-title .t-title a').text(),
     title: $(track).find('td.t-title .t-title a').text(),
-    author: $(track).find('td.u-name .u-name a ').html(),
+    author: $(track).find('td.u-name .u-name a ').text(),
     category: {
       id: $(track).find('td.f-name .f-name a').attr('href').replace(/.*?f=([0-9]*)$/g, '$1'),
       name: $(track).find('td.f-name .f-name a').text(),
