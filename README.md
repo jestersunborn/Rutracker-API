@@ -33,14 +33,23 @@ Then you need to be logged in:
 const username = 'username';
 const password = 'password';
 
+const rutracker = new RutrackerAPI();
 
-// You can provide cookie in constructor, e.g. You made login once, and now you do not want to do login again, you can save previous cookie and use them now
-// method .login return the cookie
-const rutracker = new RutrackerAPI(cookie);
+rutracker.login(username, password)
+  .then((cookie) => {
+    // you can save the cookie to use them later
+    // ...
+  })
+  .then(() => rutracker.search('Inception', 'size', true)) // Searching for Inception, sorted by size from min to max
+  .then((results) => console.log(results))
+  .catch((err) => {
+    // Something wrong
+  });
 
+// If login of password are wrong you need to enter the captcha
 rutracker.getCaptcha()
-  .then((res) => {
-    // do something with response
+  .then((captcha) => {
+    // You will get the object like this
     /*{
       img: String,
       code: String,
@@ -48,10 +57,27 @@ rutracker.getCaptcha()
     }*/
   })
   .then(() => rutracker.login(username, password, answer))
-  .then(() => console.log('Wow, cool. You are logged in!'))
-  .then(() => rutracker.search('Inception'))
-  .then((res) => console.log(res))
-  .catch((err) => console.error('Hmm, bad. Something wrong :('))
+  .then(() => {
+    // code
+  })
+  .catch((err) => {
+    // If you do not need a captcha
+  })
+
+// If you made login once, and now you do not want to do login again, you can use previous cookie
+
+const cookie = getSavedCookieFromSomewhere();
+
+const rutracker = new RutrackerAPI(cookie);
+
+// And now you can start using other methods
+rutracker.search('Inception', 'date', false)
+  .then((results) => {
+    console.log(results);
+  })
+  .catch((err) => {
+    console.error(err);
+  })
 ```
 
 ## Testing:
