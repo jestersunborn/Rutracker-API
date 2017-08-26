@@ -5,7 +5,8 @@
     "import/prefer-default-export": "off",
     "quotes": "off",
     "no-confusing-arrow": "off",
-    "indent": "off"
+    "indent": "off",
+    "no-shadow": "off"
   },
   "overrides": [
     {

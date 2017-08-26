@@ -4,6 +4,7 @@ import querystring from 'querystring';
 import windows1251 from 'windows-1251';
 
 import {
+  getCountOfPages,
   parseSearch,
   parseFullInfo,
   parseCategories,
@@ -108,8 +109,47 @@ class RutrackerApi {
     });
   }
 
+  // Fetching all pages with results
+  fetchPagination(count, id) {
+    return Array(count)
+      .fill(false)
+      .map((request, index) => new Promise((resolve, reject) => {
+        const query = encodeURIComponent(this.query);
+        const path = `${this.searchPath}?search_id=${id}&start=${index * 50}&nm=${query}`;
+        const options = {
+          hostname: this.host,
+          port: 80,
+          path,
+          method: 'POST',
+          headers: { Cookie: this.cookie },
+        };
+        const req = http.request(options, (res) => {
+          if (res.statusCode.toString() === '200') {
+            let data = '';
+            res.setEncoding('binary');
+            res.on('data', (x) => {
+              data += windows1251.decode(x, { mode: 'html' });
+            });
+            res.on('end', () => {
+              const parsed = parseSearch(data, this.host);
+              const sorted = sortBy(parsed, this.by, this.direction);
+              resolve(sorted);
+            });
+          } else {
+            reject(new Error(res.statusCode));
+          }
+        });
+        req.on('error', (err) => { reject(err); });
+        req.end();
+      }),
+    );
+  }
+
   // Search
   search(q, by, direction) {
+    this.query = q;
+    this.direction = direction;
+    this.by = by;
     return new Promise((resolve, reject) => {
       if (typeof this.cookie !== 'string') {
         reject(new Error('Unauthorized: Use `login` method first'));
@@ -135,9 +175,10 @@ class RutrackerApi {
             data += windows1251.decode(x, { mode: 'html' });
           });
           res.on('end', () => {
-            const parsed = parseSearch(data, this.host);
-            const sorted = sortBy(parsed, by, direction);
-            resolve(sorted);
+            const { count, id } = getCountOfPages(data, this.host);
+            Promise.all(this.fetchPagination(count, id))
+              .then(res => res.reduce((acc, c) => [...acc, ...c], []))
+              .then(total => resolve(total));
           });
         } else {
           reject(new Error(res.statusCode));

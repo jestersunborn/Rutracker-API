@@ -66,6 +66,19 @@ export const parseSearch = (html, host) => {
     .filter(x => x.id) : [];
 };
 
+// Get count of pages
+export const getCountOfPages = (html) => {
+  const $ = cheerio.load(html);
+  return {
+    count: +$('#main_content_wrap .bottom_info .nav p[style="float: right"]')
+      .text()
+      .replace(/(.*), ([0-9]*).*$/g, '$2'),
+    id: $('#main_content_wrap .bottom_info .nav p[style="float: right"] a:first-child')
+      .attr('href')
+      .replace(/.*search_id=(.*)&start.*$/g, '$1'),
+  };
+};
+
 // Parse full info
 export const parseFullInfo = (html) => {
   const $ = cheerio.load(html);
