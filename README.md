@@ -1,10 +1,18 @@
 # rutracker-api
 > This is a fork of [Nikita Gusarov Rutracker-API](https://github.com/nikityy/Rutracker-API) with little bit more functionality.
 
+Watch on npm: [rutracker-api-2](https://www.npmjs.com/package/rutracker-api-2)
+
 * [Installing](https://github.com/jestersunborn/rutracker-api#installing)
 * [Using](https://github.com/jestersunborn/rutracker-api#using)
 * [Testing](https://github.com/jestersunborn/rutracker-api#testing)
 * [API](https://github.com/jestersunborn/rutracker-api#api)
+  * [.login(username: String, password: String, answer: String)](https://github.com/jestersunborn/rutracker-api#loginusername-string-password-string-answer-string)
+  * [.getCaptcha()](https://github.com/jestersunborn/rutracker-api#getcaptcha)
+  * [.search(query: String, sortBy: String, direction: Boolean)](https://github.com/jestersunborn/rutracker-api#searchquery-string-sortby-string-direction-boolean)
+  * [.download(id: String)](https://github.com/jestersunborn/rutracker-api#downloadid-string)
+  * [.getFullInfo(id: String)](https://github.com/jestersunborn/rutracker-api#getfullinfoid-string)
+  * [.getCategories(deep: Boolean)](https://github.com/jestersunborn/rutracker-api#getcategoriesdeep-boolean)
 * [Short API](https://github.com/jestersunborn/rutracker-api#short-api)
 * [Build](https://github.com/jestersunborn/rutracker-api#build)
 
@@ -95,6 +103,36 @@ npm test
 ```
 
 ## API:
+
+#### .login(username: String, password: String, answer: String);
+return Promise with response:
+```javascript
+  cookie: String
+```
+
+`answer` - answer for captcha (optional);
+
+Simple usage:
+```javascript
+const rutracker = new RutrackerAPI();
+
+const username = 'username';
+const password = 'password';
+
+// 1
+rutracker.login(username, password)
+  .then(cookie => console.log(cookie))
+  .catch(err => console.error(err));
+
+// 2
+rutracker.getCaptcha()
+  .then(({ img, capSid, code }) => { // You do not need to use capSid and code in most of cases
+    const answer = getAnswerForCaptchaFromSomewhere(img);
+    return rutracker.login(username, password, answer)
+  })
+  .then(cookie => console.log(cookie))
+  .catch(err => console.error(err)); // If you do not need for a captcha
+```
 
 #### .getCaptcha();
 return Promise with response:
