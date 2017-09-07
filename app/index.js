@@ -15,11 +15,11 @@ import {
 class RutrackerApi {
   constructor(cookie) {
     this.host = 'rutracker.org';
-    this.loginPath = '/forum/login.php'; // For login
-    this.searchPath = '/forum/tracker.php'; // For search
-    this.downloadPath = '/forum/dl.php'; // For download
-    this.fullPath = '/forum/viewtopic.php'; // For gettings full content
-    this.indexPath = '/forum/index.php'; // Fot categories
+    this.loginPath = '/forum/login.php';
+    this.searchPath = '/forum/tracker.php';
+    this.downloadPath = '/forum/dl.php';
+    this.fullPath = '/forum/viewtopic.php';
+    this.indexPath = '/forum/index.php';
     this.cookie = cookie || null;
   }
 

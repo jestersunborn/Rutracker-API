@@ -6,7 +6,10 @@ const uglify = require('gulp-uglify');
 
 gulp.task('default', () =>
   gulp.src('app/*.js')
-  .pipe(babel({ presets: ['env'] }))
+  .pipe(babel({
+    presets: ['env'],
+    plugins: ['add-module-exports']
+  }))
   .pipe(uglify())
   .pipe(gulp.dest('build'))
 );

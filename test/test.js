@@ -1,7 +1,7 @@
 // helpfull packages
 require('colors');
 // core packages
-const Rutracker = require('../build/').default;
+const Rutracker = require('../build/');
 // Config
 const { username, password } = require('./config');
 
