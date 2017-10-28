@@ -10,6 +10,7 @@ import {
   parseCategories,
   sortBy,
   parseCaptcha,
+  parseUserInfo,
 } from './helpers';
 
 class RutrackerApi {
@@ -20,6 +21,7 @@ class RutrackerApi {
     this.downloadPath = '/forum/dl.php';
     this.fullPath = '/forum/viewtopic.php';
     this.indexPath = '/forum/index.php';
+    this.userPath = '/forum/profile.php';
     this.cookie = cookie || null;
   }
 
@@ -280,6 +282,36 @@ class RutrackerApi {
       req.on('error', (err) => { reject(err); });
       req.end();
     });
+  }
+
+  getUserInfo(userId) {
+    return new Promise((resolve, reject) => {
+      const path = `${this.userPath}?mode=viewprofile&u=${userId}`;
+      const option = {
+        hostname: this.host,
+        port: 80,
+        path,
+        method: 'GET',
+        headers: { Cookie: this.cookie},
+      };
+
+      const req = http.request(option, (res) => {
+        if (res.statusCode.toString() === '200') {
+          let data = '';
+          res.setEncoding('binary');
+          res.on('data', (x) => {
+            data += windows1251.decode(x, { mode: 'html'});
+          });
+          res.on('end', () => {
+            resolve(parseUserInfo(data));
+          });
+        } else {
+          reject(new Error(res.statusCode));
+        }
+      });
+      req.on('erorr', (err) => { reject(err)});
+      req.end();
+    })
   }
 }
 
