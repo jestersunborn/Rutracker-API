@@ -145,3 +145,14 @@ export const parseCaptcha = (html) => {
       }
     : null;
 };
+
+export const parseUserInfo = (html) => {
+  const $ = cheerio.load(html);
+
+  return $('#main_content')
+    ? {
+        img: `https:${$('#avatar-img img').attr('src')}`,
+        age: $('.user_details').find('td').eq(3).text().replace(/\n/g, '').replace(/\t/g, ''),
+      }
+    : null;
+};
