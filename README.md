@@ -13,6 +13,7 @@ Watch on npm: [rutracker-api-2](https://www.npmjs.com/package/rutracker-api-2)
   * [.download(id: String)](https://github.com/jestersunborn/rutracker-api#downloadid-string)
   * [.getFullInfo(id: String)](https://github.com/jestersunborn/rutracker-api#getfullinfoid-string)
   * [.getCategories(deep: Boolean)](https://github.com/jestersunborn/rutracker-api#getcategoriesdeep-boolean)
+  * [.getUserInfo(id: String)]()
 * [Short API](https://github.com/jestersunborn/rutracker-api#short-api)
 * [Build](https://github.com/jestersunborn/rutracker-api#build)
 
@@ -262,6 +263,23 @@ rutracker.getCategories(deep) // deep - true or false
   .catch((err) => console.error(err));
 ```
 
+#### .getUserInfo(id: String);
+return Promise with response:
+```javascript
+{
+  img: String,
+  age: String,
+}
+```
+
+Simple usage:
+
+```javascript
+rutracker.getUserInfo('1234567890')
+  .then(({ img, age }) => console.log(img, age))
+  .catch(err => console.error('Something wrong!'));
+```
+
 ## Short API:
 ```javascript
 .login(username: String, password: String, answer: String): Promise;
@@ -280,6 +298,9 @@ rutracker.getCategories(deep) // deep - true or false
 ```
 ```javascript
 .getCategories(deep: Boolean): Promise;
+```
+```javascript
+.getUserInfo(id: String): Promise;
 ```
 
 ## Build:
