@@ -13,7 +13,7 @@ Watch on npm: [rutracker-api-2](https://www.npmjs.com/package/rutracker-api-2)
   * [.download(id: String)](https://github.com/jestersunborn/rutracker-api#downloadid-string)
   * [.getFullInfo(id: String)](https://github.com/jestersunborn/rutracker-api#getfullinfoid-string)
   * [.getCategories(deep: Boolean)](https://github.com/jestersunborn/rutracker-api#getcategoriesdeep-boolean)
-  * [.getUserInfo(id: String)]()
+  * [.getUserInfo(id: String)](https://github.com/jestersunborn/rutracker-api#getuserinfoid-string)
 * [Short API](https://github.com/jestersunborn/rutracker-api#short-api)
 * [Build](https://github.com/jestersunborn/rutracker-api#build)
 
