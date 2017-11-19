@@ -269,6 +269,8 @@ return Promise with response:
 {
   img: String,
   age: String,
+  role: String,
+  from: String,
 }
 ```
 
@@ -276,7 +278,7 @@ Simple usage:
 
 ```javascript
 rutracker.getUserInfo('1234567890')
-  .then(({ img, age }) => console.log(img, age))
+  .then(({ img, age, role, from }) => console.log(img, age, role, from))
   .catch(err => console.error('Something wrong!'));
 ```
 
