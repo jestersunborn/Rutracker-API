@@ -151,8 +151,15 @@ export const parseUserInfo = (html) => {
 
   return $('#main_content')
     ? {
-        img: `https:${$('#avatar-img img').attr('src')}`,
-        age: $('.user_details').find('td').eq(3).text().replace(/\n/g, '').replace(/\t/g, ''),
+        img: $('#avatar-img img').attr('src') ? `https:${$('#avatar-img img').attr('src')}` : null,
+        age: $('.user_details')
+          .find('td')
+          .eq(3)
+          .text()
+          .replace(/\n/g, '')
+          .replace(/\t/g, ''),
+        role: $('td#role b:first-child').text(),
+        from: $('.user_details .med img').attr('title'),
       }
     : null;
 };

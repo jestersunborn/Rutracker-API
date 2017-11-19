@@ -292,7 +292,7 @@ class RutrackerApi {
         port: 80,
         path,
         method: 'GET',
-        headers: { Cookie: this.cookie},
+        headers: { Cookie: this.cookie },
       };
 
       const req = http.request(option, (res) => {
@@ -300,7 +300,7 @@ class RutrackerApi {
           let data = '';
           res.setEncoding('binary');
           res.on('data', (x) => {
-            data += windows1251.decode(x, { mode: 'html'});
+            data += windows1251.decode(x, { mode: 'html' });
           });
           res.on('end', () => {
             resolve(parseUserInfo(data));
@@ -309,9 +309,9 @@ class RutrackerApi {
           reject(new Error(res.statusCode));
         }
       });
-      req.on('erorr', (err) => { reject(err)});
+      req.on('erorr', reject);
       req.end();
-    })
+    });
   }
 }
 
