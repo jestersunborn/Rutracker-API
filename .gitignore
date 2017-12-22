@@ -2,5 +2,4 @@ node_modules
 .DS_Store
 test/config.json
 lib
-package-lock.json
 yarn.lock
