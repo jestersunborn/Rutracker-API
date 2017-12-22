@@ -271,6 +271,9 @@ return Promise with response:
   age: String,
   role: String,
   from: String,
+  gender: String,
+  experience: String,
+  createDate: String,
 }
 ```
 
@@ -278,7 +281,17 @@ Simple usage:
 
 ```javascript
 rutracker.getUserInfo('1234567890')
-  .then(({ img, age, role, from }) => console.log(img, age, role, from))
+  .then((res) => {
+    console.log(
+      res.img,
+      res.age,
+      res.role,
+      res.from,
+      res.gender,
+      res.experience,
+      res.createDate,
+    );
+  })
   .catch(err => console.error('Something wrong!'));
 ```
 
