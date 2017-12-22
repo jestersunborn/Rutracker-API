@@ -4,6 +4,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const MinifyPlugin = require("babel-minify-webpack-plugin");
 
 module.exports = {
+  target: 'node',
   entry: './src/index.js',
   output: {
     filename: 'index.js',
