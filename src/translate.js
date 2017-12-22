@@ -7,6 +7,9 @@ export default {
   // Roles
   Пользователь: 'User',
 
+  // Dates
+  месяцев: 'months',
+
   // Statuses
   проверено: 'approved',
   сомнительно: 'doubtfully',

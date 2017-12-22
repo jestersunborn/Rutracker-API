@@ -11,7 +11,7 @@ Watch on npm: [rutracker-api-2](https://www.npmjs.com/package/rutracker-api-2)
   * [.getCaptcha()](https://github.com/jestersunborn/rutracker-api#getcaptcha)
   * [.search(query: String, sortBy: String, direction: Boolean)](https://github.com/jestersunborn/rutracker-api#searchquery-string-sortby-string-direction-boolean)
   * [.download(id: String)](https://github.com/jestersunborn/rutracker-api#downloadid-string)
-  * [.getFullInfo(id: String)](https://github.com/jestersunborn/rutracker-api#getfullinfoid-string)
+  * [.getFullFileInfo(id: String)](https://github.com/jestersunborn/rutracker-api#getfullinfoid-string)
   * [.getCategories(deep: Boolean)](https://github.com/jestersunborn/rutracker-api#getcategoriesdeep-boolean)
   * [.getUserInfo(id: String)](https://github.com/jestersunborn/rutracker-api#getuserinfoid-string)
 * [Short API](https://github.com/jestersunborn/rutracker-api#short-api)
@@ -210,7 +210,7 @@ rutracker.download('12345')
   .catch((err) => console.error(err));
 ```
 
-#### .getFullInfo(id: String);
+#### .getFullFileInfo(id: String);
 return Promise with response:
 ```javascript
 {
@@ -226,7 +226,7 @@ return Promise with response:
 Simple usage:
 
 ```javascript
-rutracker.getFullInfo('12345')
+rutracker.getFullFileInfo('12345')
   .then((res) => {
     console.log(res);
   })
@@ -309,7 +309,7 @@ rutracker.getUserInfo('1234567890')
 .download(id: String): Promise;
 ```
 ```javascript
-.getFullInfo(id: String): Promise;
+.getFullFileInfo(id: String): Promise;
 ```
 ```javascript
 .getCategories(deep: Boolean): Promise;
