@@ -2,12 +2,12 @@
   "name": "rutracker-api-2",
   "version": "1.3.0",
   "description": "This is a fork of https://github.com/nikityy/Rutracker-API with little bit more functionality.",
-  "main": "build/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "node test/test.js",
-    "build": "gulp",
-    "start": "gulp watch",
-    "deploy": "npm version patch && npm publish",
+    "build": "webpack",
+    "start": "webpack --watch",
+    "deploy": "npm version patch && npm publish ./",
     "minor-deploy": "npm version minor && npm publish ./",
     "major-deploy": "npm version major && npm publish ./"
   },
@@ -47,14 +47,20 @@
   "directories": {},
   "devDependencies": {
     "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-minify-webpack-plugin": "^0.2.0",
     "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-env": "^1.6.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
     "colors": "^1.1.2",
     "eslint": "^4.4.1",
     "eslint-config-airbnb-base": "^11.3.1",
     "eslint-plugin-import": "^2.7.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.0",
-    "gulp-uglify": "^3.0.0"
+    "gulp-uglify": "^3.0.0",
+    "uglifyjs-webpack-plugin": "^1.1.4",
+    "webpack": "^3.10.0"
   }
 }

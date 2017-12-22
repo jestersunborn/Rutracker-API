@@ -1,10 +1,12 @@
-// helpfull packages
+// Helpers
 require('colors');
-// core packages
-const Rutracker = require('../build/');
+
+// Core packages
+const Rutracker = require('../lib');
+
 // Config
 // const { username, password } = require('./config');
-
+console.log(Rutracker);
 const rutracker = new Rutracker();
 
 rutracker.getUserInfo('38431912')

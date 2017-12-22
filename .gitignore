@@ -1,6 +1,6 @@
 node_modules
 .DS_Store
 test/config.json
-build
+lib
 package-lock.json
 yarn.lock

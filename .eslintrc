@@ -10,7 +10,7 @@
   },
   "overrides": [
     {
-      "files": ["app/index.js", "test/test.js"],
+      "files": ["src/index.js", "test/test.js"],
       "excludedFiles": "build/index.js"
     }
   ]

@@ -1,7 +1,17 @@
 import Promise from 'promise-polyfill';
-import http from 'http';
-import querystring from 'querystring';
-import windows1251 from 'windows-1251';
+import { request } from 'http';
+import { stringify } from 'querystring';
+import { decode } from 'windows-1251';
+
+import {
+  HOST,
+  LOGIN_PATH,
+  SEARCH_PATH,
+  DOWNLOAD_PATH,
+  FULL_INFO_PATH,
+  INDEX_PATH,
+  USER_PATH,
+} from './constants';
 
 import {
   getCountOfPages,
@@ -13,34 +23,27 @@ import {
   parseUserInfo,
 } from './helpers';
 
-class RutrackerApi {
+export default class RutrackerApi {
   constructor(cookie) {
-    this.host = 'rutracker.org';
-    this.loginPath = '/forum/login.php';
-    this.searchPath = '/forum/tracker.php';
-    this.downloadPath = '/forum/dl.php';
-    this.fullPath = '/forum/viewtopic.php';
-    this.indexPath = '/forum/index.php';
-    this.userPath = '/forum/profile.php';
     this.cookie = cookie || null;
   }
 
   getCaptcha() {
     return new Promise((resolve, reject) => {
       const options = {
-        hostname: this.host,
+        hostname: HOST,
         port: 80,
-        path: this.loginPath,
+        path: LOGIN_PATH,
         method: 'GET',
         headers: {},
       };
 
-      const req = http.request(options, (res) => {
+      const req = request(options, (res) => {
         if (res.statusCode.toString() === '200') {
           let data = '';
           res.setEncoding('binary');
           res.on('data', (x) => {
-            data += windows1251.decode(x, { mode: 'html' });
+            data += decode(x, { mode: 'html' });
           });
           res.on('end', () => {
             const captcha = parseCaptcha(data);
@@ -72,23 +75,23 @@ class RutrackerApi {
     return new Promise((resolve, reject) => {
       // User data
       const postData = answer
-        ? querystring.stringify({
+        ? stringify({
             login_username: username,
             login_password: password,
             login: 'Вход',
             cap_sid: this.captcha.capSid,
             [this.captcha.code]: answer,
           })
-        : querystring.stringify({
+        : stringify({
             login_username: username,
             login_password: password,
             login: 'Вход',
           });
 
       const options = {
-        hostname: this.host,
+        hostname: HOST,
         port: 80,
-        path: this.loginPath,
+        path: LOGIN_PATH,
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -96,7 +99,7 @@ class RutrackerApi {
         },
       };
 
-      const req = http.request(options, (res) => {
+      const req = request(options, (res) => {
         if (res.statusCode.toString() === '302') {
           this.cookie = res.headers['set-cookie'][0];
           resolve(res.headers['set-cookie'][0]);
@@ -117,23 +120,23 @@ class RutrackerApi {
       .fill(false)
       .map((request, index) => new Promise((resolve, reject) => {
         const query = encodeURIComponent(this.query);
-        const path = `${this.searchPath}?search_id=${id}&start=${index * 50}&nm=${query}`;
+        const path = `${SEARCH_PATH}?search_id=${id}&start=${index * 50}&nm=${query}`;
         const options = {
-          hostname: this.host,
+          hostname: HOST,
           port: 80,
           path,
           method: 'POST',
           headers: { Cookie: this.cookie },
         };
-        const req = http.request(options, (res) => {
+        const req = request(options, (res) => {
           if (res.statusCode.toString() === '200') {
             let data = '';
             res.setEncoding('binary');
             res.on('data', (x) => {
-              data += windows1251.decode(x, { mode: 'html' });
+              data += decode(x, { mode: 'html' });
             });
             res.on('end', () => {
-              const parsed = parseSearch(data, this.host);
+              const parsed = parseSearch(data, HOST);
               const sorted = sortBy(parsed, this.by, this.direction);
               resolve(sorted);
             });
@@ -159,25 +162,25 @@ class RutrackerApi {
         reject(new Error('Expected at least one argument'));
       }
       const query = encodeURIComponent(q);
-      const path = `${this.searchPath}?nm=${query}`;
+      const path = `${SEARCH_PATH}?nm=${query}`;
 
       const options = {
-        hostname: this.host,
+        hostname: HOST,
         port: 80,
         path,
         method: 'POST',
         headers: { Cookie: this.cookie },
       };
 
-      const req = http.request(options, (res) => {
+      const req = request(options, (res) => {
         if (res.statusCode.toString() === '200') {
           let data = '';
           res.setEncoding('binary');
           res.on('data', (x) => {
-            data += windows1251.decode(x, { mode: 'html' });
+            data += decode(x, { mode: 'html' });
           });
           res.on('end', () => {
-            const { count, id } = getCountOfPages(data, this.host);
+            const { count, id } = getCountOfPages(data, HOST);
             Promise.all(this.fetchPagination(count, id))
               .then(res => res.reduce((acc, c) => [...acc, ...c], []))
               .then(total => resolve(total));
@@ -199,17 +202,17 @@ class RutrackerApi {
       } else if (typeof id === 'undefined') {
         reject(new Error('Expected at least one argument'));
       }
-      const path = `${this.downloadPath}?t=${id}`;
+      const path = `${DOWNLOAD_PATH}?t=${id}`;
 
       const options = {
-        hostname: this.host,
+        hostname: HOST,
         port: 80,
         path,
         method: 'GET',
         headers: { Cookie: this.cookie },
       };
 
-      const req = http.request(options, (res) => {
+      const req = request(options, (res) => {
         if (res.statusCode.toString() === '200') {
           resolve(res);
         } else {
@@ -222,26 +225,26 @@ class RutrackerApi {
     });
   }
 
-  getFullInfo(id) {
+  getFullFileInfo(id) {
     return new Promise((resolve, reject) => {
       if (!id) {
         reject(new Error('Provide an ID, please'));
       }
-      const path = `${this.fullPath}?t=${id}`;
+      const path = `${FULL_INFO_PATH}?t=${id}`;
       const options = {
-        hostname: this.host,
+        hostname: HOST,
         port: 80,
         path,
         method: 'POST',
         headers: { Cookie: this.cookie },
       };
 
-      const req = http.request(options, (res) => {
+      const req = request(options, (res) => {
         if (res.statusCode.toString() === '200') {
           let data = '';
           res.setEncoding('binary');
           res.on('data', (x) => {
-            data += windows1251.decode(x, { mode: 'html' });
+            data += decode(x, { mode: 'html' });
           });
           res.on('end', () => {
             resolve(parseFullInfo(data));
@@ -257,20 +260,20 @@ class RutrackerApi {
 
   getCategories(deep) {
     return new Promise((resolve, reject) => {
-      const path = `${this.indexPath}`;
+      const path = `${INDEX_PATH}`;
       const options = {
-        hostname: this.host,
+        hostname: HOST,
         port: 80,
         path,
         method: 'POST',
         headers: { Cookie: this.cookie },
       };
-      const req = http.request(options, (res) => {
+      const req = request(options, (res) => {
         if (res.statusCode.toString() === '200') {
           let data = '';
           res.setEncoding('binary');
           res.on('data', (x) => {
-            data += windows1251.decode(x, { mode: 'html' });
+            data += decode(x, { mode: 'html' });
           });
           res.on('end', () => {
             resolve(parseCategories(data, deep));
@@ -286,21 +289,21 @@ class RutrackerApi {
 
   getUserInfo(userId) {
     return new Promise((resolve, reject) => {
-      const path = `${this.userPath}?mode=viewprofile&u=${userId}`;
+      const path = `${USER_PATH}?mode=viewprofile&u=${userId}`;
       const option = {
-        hostname: this.host,
+        hostname: HOST,
         port: 80,
-        path,
         method: 'GET',
         headers: { Cookie: this.cookie },
+        path,
       };
 
-      const req = http.request(option, (res) => {
+      const req = request(option, (res) => {
         if (res.statusCode.toString() === '200') {
           let data = '';
           res.setEncoding('binary');
           res.on('data', (x) => {
-            data += windows1251.decode(x, { mode: 'html' });
+            data += decode(x, { mode: 'html' });
           });
           res.on('end', () => {
             resolve(parseUserInfo(data));
@@ -314,5 +317,3 @@ class RutrackerApi {
     });
   }
 }
-
-export default RutrackerApi;
