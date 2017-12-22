@@ -9,7 +9,7 @@
     "start": "webpack --watch",
     "deploy": "npm version patch && npm publish ./",
     "minor-deploy": "npm version minor && npm publish ./",
-    "major-deploy": "npm version major && npm publish ./",
+    "major-deploy": "npm version major && npm publish ./"
   },
   "keywords": [
     "rutracker",
