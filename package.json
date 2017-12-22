@@ -10,7 +10,6 @@
     "deploy": "npm version patch && npm publish ./",
     "minor-deploy": "npm version minor && npm publish ./",
     "major-deploy": "npm version major && npm publish ./",
-    "publish": "npm publish ./"
   },
   "keywords": [
     "rutracker",
