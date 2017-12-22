@@ -1,42 +1,10 @@
 import cheerio from 'cheerio';
-
-const getStatus = (title) => {
-  switch (title) {
-    case 'проверено':
-      return 'approved';
-    case 'сомнительно':
-      return 'doubtfully';
-    case 'не проверено':
-      return 'not-approved';
-    case 'временная':
-      return 'temporary';
-    default:
-      return 'unnamed-status';
-  }
-};
-
-const translateMonth = (month) => {
-  switch (month) {
-    case 'Янв': return 'Jan';
-    case 'Фев': return 'Feb';
-    case 'Мар': return 'Mar';
-    case 'Апр': return 'Apr';
-    case 'Май': return 'May';
-    case 'Июн': return 'Jun';
-    case 'Июл': return 'Jul';
-    case 'Авг': return 'Aug';
-    case 'Сен': return 'Sep';
-    case 'Окт': return 'Oct';
-    case 'Ноя': return 'Nov';
-    case 'Дек': return 'Dec';
-    default: return month;
-  }
-};
+import translate from './translate';
 
 const formatDate = (date) => {
   const regExp = /([0-9]{1,2})-(.*)-([0-9]{1,2})/g;
   const day = date.replace(regExp, `$1`);
-  const month = translateMonth(date.replace(regExp, `$2`));
+  const month = translate[date.replace(regExp, `$2`)];
   const year = `20${date.replace(regExp, `$3`)}`;
   return { day, month, year };
 };
@@ -47,7 +15,7 @@ export const parseSearch = (html, host) => {
   const condition = $('#tor-tbl tbody').find('tr td:first-child').attr('colspan') === '10';
   return !condition ? $('#tor-tbl tbody').find('tr').map((_, track) => ({
     id: $(track).find('td.t-title .t-title a').attr('data-topic_id'),
-    status: getStatus($(track).find('td:nth-child(2)').attr('title')),
+    status: translate[$(track).find('td:nth-child(2)').attr('title')],
     shortName: $(track).find('td.t-title .t-title a').text(),
     title: $(track).find('td.t-title .t-title a').text(),
     author: $(track).find('td.u-name .u-name a ').text(),
@@ -146,8 +114,12 @@ export const parseCaptcha = (html) => {
     : null;
 };
 
+
 export const parseUserInfo = (html) => {
   const $ = cheerio.load(html);
+  const genderRegex = /(Мужской|Женский)/gm;
+  const createDateRegex = /<b>([0-9]{4}-[0-9]{2}-[0-9]{2})<\/b>/gm;
+  const expRegex = /<b>[ 0-9йфячіцувсмакепитрнгоьблшщдюжзїє]*<\/b>/gm;
 
   return $('#main_content')
     ? {
@@ -158,8 +130,11 @@ export const parseUserInfo = (html) => {
           .text()
           .replace(/\n/g, '')
           .replace(/\t/g, ''),
-        role: $('td#role b:first-child').text(),
-        from: $('.user_details .med img').attr('title'),
+        role: translate[$('#role').find('b').eq(1).textContent],
+        from: translate[$('.user_details .med img').attr('title')],
+        gender: translate[html.match(genderRegex).filter(Boolean)[0]],
+        experience: html.replace(/\n/g, '').replace(/\t/g, '').match(expRegex)[0].replace('<b>', '').replace('</b>', ''),
+        createDate: html.match(createDateRegex)[0].replace('<b>', '').replace('</b>', '') || 'N/A',
       }
     : null;
 };

@@ -5,7 +5,7 @@ const babel = require('gulp-babel');
 const uglify = require('gulp-uglify');
 
 gulp.task('default', () =>
-  gulp.src('app/*.js')
+  gulp.src('src/*.js')
   .pipe(babel({
     presets: ['env'],
     plugins: ['add-module-exports']
@@ -15,7 +15,5 @@ gulp.task('default', () =>
 );
 
 gulp.task('watch', () =>
-  gulp.watch('app/*', ['default'])
+  gulp.watch('src/*', ['default'])
 );
-
-/* eslint-enable */
