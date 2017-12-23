@@ -5,12 +5,15 @@ require('colors');
 const Rutracker = require('../lib');
 
 // Config
-// const { username, password } = require('./config');
+const { username, password } = require('./config');
 
 const rutracker = new Rutracker();
 
-rutracker.getCategories(true)
-  .then((res) => {
-    console.log(res);
-  })
-  .catch(err => console.error(err));
+rutracker.login(username, password)
+    .then(() => rutracker.search('Inception'))
+    .then((res) => {
+        console.log(res);
+    })
+    .catch((err) => {
+        console.log(JSON.stringify(err));
+    });

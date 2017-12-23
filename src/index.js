@@ -1,4 +1,3 @@
-import Promise from 'promise-polyfill';
 import { request } from 'http';
 import { stringify } from 'querystring';
 import { decode } from 'windows-1251';
@@ -21,6 +20,7 @@ import {
   sortBy,
   parseCaptcha,
   parseUserInfo,
+  parseStats,
 } from './helpers';
 
 export default class RutrackerApi {
@@ -183,13 +183,14 @@ export default class RutrackerApi {
             const { count, id } = getCountOfPages(data, HOST);
             Promise.all(this.fetchPagination(count, id))
               .then(res => res.reduce((acc, c) => [...acc, ...c], []))
-              .then(total => resolve(total));
+              .then(total => resolve(total))
+              .catch(reject);
           });
         } else {
           reject(new Error(res.statusCode));
         }
       });
-      req.on('error', (err) => { reject(err); });
+      req.on('error', reject);
       req.end();
     });
   }
@@ -313,6 +314,33 @@ export default class RutrackerApi {
         }
       });
       req.on('erorr', reject);
+      req.end();
+    });
+  }
+  getStats() {
+    return new Promise((resolve, reject) => {
+      const options = {
+        hostname: HOST,
+        port: 80,
+        path: INDEX_PATH,
+        method: 'GET',
+        headers: { Cookie: this.cookie },
+      };
+      const req = request(options, (res) => {
+        if (res.statusCode.toString() === '200') {
+          let data = '';
+          res.setEncoding('binary');
+          res.on('data', (x) => {
+            data += decode(x, { mode: 'html' });
+          });
+          res.on('end', () => {
+            resolve(parseStats(data));
+          });
+        } else {
+          reject(new Error(res.statusCode));
+        }
+      });
+      req.on('error', (err) => { reject(err); });
       req.end();
     });
   }

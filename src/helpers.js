@@ -138,3 +138,42 @@ export const parseUserInfo = (html) => {
       }
     : null;
 };
+
+export const parseStats = (html) => {
+  const $ = cheerio.load(html);
+  const size = $('#board_stats_wrap .med')
+    .find('p')
+    .eq(1)
+    .find('b')
+    .eq(2)
+    .text();
+  return {
+    users: Number($('#board_stats_wrap .med')
+      .find('p')
+      .eq(0)
+      .find('b')
+      .eq(0)
+      .html()
+      .replace(/,/g, '')),
+    torrents: Number($('#board_stats_wrap .med')
+      .find('p')
+      .eq(1)
+      .find('b')
+      .eq(0)
+      .html()
+      .replace(/,/g, '')),
+    live: Number($('#board_stats_wrap .med')
+      .find('p')
+      .eq(1)
+      .find('b')
+      .eq(1)
+      .html()
+      .replace(/,/g, '')),
+    size: {
+      value: Number(size.match(/([0-9.]*)/g)[0]),
+      measure: size.match(/([a-zA-Z]*)$/g)[0],
+    },
+    seed: Number($('#board_stats_wrap .seedmed').text().replace(/,/g, '')),
+    leech: Number($('#board_stats_wrap .seedmed').text().replace(/,/g, '')),
+  };
+};
