@@ -118,7 +118,7 @@ export default class RutrackerApi {
   fetchPagination(count, id) {
     return Array(count)
       .fill(false)
-      .map((request, index) => new Promise((resolve, reject) => {
+      .map((_, index) => new Promise((resolve, reject) => {
         const query = encodeURIComponent(this.query);
         const path = `${SEARCH_PATH}?search_id=${id}&start=${index * 50}&nm=${query}`;
         const options = {
