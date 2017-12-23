@@ -1,36 +1,4 @@
-/* eslint-disable */
 export default {
-  // Gender
-  Женский: 'Female',
-  Мужской: 'Male',
-
-  // Roles
-  Пользователь: 'User',
-
-  // Dates
-  месяцев: 'months',
-
-  // Statuses
-  проверено: 'approved',
-  сомнительно: 'doubtfully',
-  'не проверено': 'not-approved',
-  временная: 'temporary',
-
-  // Months
-  Янв: 'Jan',
-  Фев: 'Feb',
-  Мар: 'Mar',
-  Апр: 'Apr',
-  Май: 'May',
-  Июн: 'Jun',
-  Июл: 'Jul',
-  Авг: 'Aug',
-  Сен: 'Sep',
-  Окт: 'Oct',
-  Ноя: 'Nov',
-  Дек: 'Dec',
-
-  // Countries
   'Антигуа и Барбуда': 'Antigua and Barbuda',
   'Босния и Герцеговина': 'Bosnia and Herzegovina',
   'Буркина-Фасо': 'Burkina Faso',
@@ -228,5 +196,4 @@ export default {
   Югославия: 'Yugoslavia',
   Ямайка: 'Jamaica',
   Япония: 'Japan',
-  undefined: 'N/A',
 };

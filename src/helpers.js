@@ -1,5 +1,5 @@
 import cheerio from 'cheerio';
-import translate from './translate';
+import translate from './intl';
 
 const formatDate = (date) => {
   const regExp = /([0-9]{1,2})-(.*)-([0-9]{1,2})/g;
@@ -77,7 +77,7 @@ export const parseCategories = (html, deep) => {
   }
   return $(categories).map((index, category) => ({
     id: $(category).attr('id').replace('c-', ''),
-    name: $(category).find('h3 a').text(),
+    name: translate[$(category).find('h3 a').text()],
   })).get();
 };
 
