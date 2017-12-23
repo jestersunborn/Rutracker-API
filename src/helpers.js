@@ -123,6 +123,11 @@ export const parseUserInfo = (html) => {
 
   return $('#main_content')
     ? {
+        username: $('#main_content_wrap > h1.pagetitle')
+          .text()
+          .replace(/\n/g, '')
+          .replace(/\t/g, '')
+          .replace(/^.*: (.*).*$/g, `$1`),
         img: $('#avatar-img img').attr('src') ? `https:${$('#avatar-img img').attr('src')}` : null,
         age: $('.user_details')
           .find('td')

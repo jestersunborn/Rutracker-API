@@ -268,6 +268,7 @@ rutracker.getCategories(deep) // deep - true or false
 return Promise with response:
 ```javascript
 {
+  username: String,
   img: String,
   age: String,
   role: String,
@@ -282,16 +283,7 @@ Simple usage:
 
 ```javascript
 rutracker.getUserInfo('1234567890')
-  .then((res) => {
-    console.log(
-      res.img,
-      res.age,
-      res.role,
-      res.from,
-      res.gender,
-      res.experience,
-      res.createDate,
-    );
+  .then(console.log);
   })
   .catch(err => console.error('Something wrong!'));
 ```
