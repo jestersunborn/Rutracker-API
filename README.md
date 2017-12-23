@@ -364,5 +364,5 @@ If you want to help me, you can do next:
 1. Suggest for what page you want to see the API.
 2. Fork the repo and add your own API.
 3. Help me with translate to English:
-  - [categories](https://github.com/jestersunborn/rutracker-api/blob/master/src/intl/categories.js)(`4.50%` translated)
+  - [categories](https://github.com/jestersunborn/rutracker-api/blob/master/src/intl/categories.js)(`7.03%` translated)
   - choose the part of rutracker site and translate (fork `->` do `->` PR);
