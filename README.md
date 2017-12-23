@@ -163,11 +163,7 @@ return Promise with response:
   seeds: Number,
   leechs: Number,
   downloads: Number,
-  date: {
-    day: String, // 1-31
-    month: String, // Jan - Dec
-    year: String, // YYYY
-  }
+  uploadDate: Date,
   url: String
 }]
 ```

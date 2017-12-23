@@ -1,12 +1,38 @@
 import cheerio from 'cheerio';
 import translate from './intl';
 
+const getMonthNumber = (month) => {
+  switch (month) {
+    case 'Янв': return 0;
+    case 'Фев': return 1;
+    case 'Мар': return 2;
+    case 'Апр': return 3;
+    case 'Май': return 4;
+    case 'Июн': return 5;
+    case 'Июл': return 6;
+    case 'Авг': return 7;
+    case 'Сен': return 8;
+    case 'Окт': return 9;
+    case 'Ноя': return 10;
+    case 'Дек': return 11;
+    default:
+      return 0;
+  }
+};
+
 const formatDate = (date) => {
-  const regExp = /([0-9]{1,2})-(.*)-([0-9]{1,2})/g;
-  const day = date.replace(regExp, `$1`);
-  const month = translate[date.replace(regExp, `$2`)];
+  const d = new Date();
+  const regExp = /^([0-9]{2})-(.*)-([0-9]{2})([0-9]{2}):([0-9]{2})$/g;
   const year = `20${date.replace(regExp, `$3`)}`;
-  return { day, month, year };
+  d.setFullYear(Number(year));
+  const month = getMonthNumber(date.replace(regExp, `$2`));
+  d.setMonth(month);
+  const day = date.replace(regExp, `$1`);
+  d.setDate(Number(day));
+  const hours = Number(date.replace(regExp, `$4`));
+  const minutes = Number(date.replace(regExp, `$5`));
+  d.setHours(hours, minutes, 0);
+  return d;
 };
 
 // Parse search results
@@ -27,7 +53,7 @@ export const parseSearch = (html, host) => {
     seeds: +$(track).find('b.seedmed').html(),
     leechs: +$(track).find('td.leechmed b').html(),
     downloads: +$(track).find('td.number-format').html(),
-    date: formatDate($(track).find('td:last-child p').text()), // Upload date
+    uploadDate: formatDate($(track).find('td:last-child p').text()), // Upload date
     url: `http://${host}/forum/viewtopic.php?t=${$(track).find('td.t-title .t-title a').attr('data-topic_id')}`,
   }))
     .get()
@@ -184,7 +210,7 @@ export const parseStats = (html) => {
       .find('b')
       .eq(0)
       .html()
-      .replace(/,/g, '')
+      .replace(/,/g, ''),
     ),
     seed: Number($('#board_stats_wrap .seedmed').text().replace(/,/g, '')),
     leech: Number($('#board_stats_wrap .seedmed').text().replace(/,/g, '')),
