@@ -173,6 +173,14 @@ export const parseStats = (html) => {
       value: Number(size.match(/([0-9.]*)/g)[0]),
       measure: size.match(/([a-zA-Z]*)$/g)[0],
     },
+    peer: Number($('#board_stats_wrap .med')
+      .find('p')
+      .eq(2)
+      .find('b')
+      .eq(0)
+      .html()
+      .replace(/,/g, '')
+    ),
     seed: Number($('#board_stats_wrap .seedmed').text().replace(/,/g, '')),
     leech: Number($('#board_stats_wrap .seedmed').text().replace(/,/g, '')),
   };

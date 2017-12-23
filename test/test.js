@@ -10,7 +10,7 @@ const { username, password } = require('./config');
 const rutracker = new Rutracker();
 
 rutracker.login(username, password)
-    .then(() => rutracker.search('Inception'))
+    .then(() => rutracker.getStats())
     .then((res) => {
         console.log(res);
     })

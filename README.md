@@ -14,6 +14,7 @@ Watch on npm: [rutracker-api-2](https://www.npmjs.com/package/rutracker-api-2)
   * [.getFullFileInfo(id: String)](https://github.com/jestersunborn/rutracker-api#getfullfileinfoid-string)
   * [.getCategories(deep: Boolean)](https://github.com/jestersunborn/rutracker-api#getcategoriesdeep-boolean)
   * [.getUserInfo(id: String)](https://github.com/jestersunborn/rutracker-api#getuserinfoid-string)
+  * [.getStats()](https://github.com/jestersunborn/rutracker-api#getstats)
 * [Short API](https://github.com/jestersunborn/rutracker-api#short-api)
 * [Build](https://github.com/jestersunborn/rutracker-api#build)
 
@@ -295,6 +296,32 @@ rutracker.getUserInfo('1234567890')
   .catch(err => console.error('Something wrong!'));
 ```
 
+#### .getStats();
+return Promise with response:
+```javascript
+{
+  users: Number,
+  torrents: Number,
+  live: Number,
+  size: {
+    value: Number,
+    measure: String,
+  },
+  peer: Number,
+  seed: Number,
+  leech: Number,
+}
+```
+
+Simple usage:
+
+```javascript
+// User should be logged in before you can use this method
+rutracker.getStats()
+  .then(console.log) // { users: 15286984, ..., size: { value: 3.46, measure: 'PB' }, ... }
+  .catch(err => console.error('Something wrong!'));
+```
+
 ## Short API:
 ```javascript
 .login(username: String, password: String, answer: String): Promise;
@@ -316,6 +343,9 @@ rutracker.getUserInfo('1234567890')
 ```
 ```javascript
 .getUserInfo(id: String): Promise;
+```
+```javascript
+.getStats(): Promise;
 ```
 
 ## Build:
