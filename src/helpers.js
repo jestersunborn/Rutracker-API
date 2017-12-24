@@ -20,6 +20,19 @@ const getMonthNumber = (month) => {
   }
 };
 
+const formatCreateDate = (date) => {
+  const d = new Date();
+  const regex = /([0-9]{4})-([0-9]{2})-([0-9]{2})/g;
+  const year = date.replace(regex, `$1`);
+  d.setFullYear(Number(year));
+  const month = date.replace(regex, `$2`);
+  d.setMonth(month - 1);
+  const day = date.replace(regex, `$3`);
+  d.setDate(Number(day));
+  d.setHours(0, 0, 0);
+  return d;
+};
+
 const formatDate = (date) => {
   const d = new Date();
   const regExp = /^([0-9]{2})-(.*)-([0-9]{2})([0-9]{2}):([0-9]{2})$/g;
@@ -155,17 +168,11 @@ export const parseUserInfo = (html) => {
           .replace(/\t/g, '')
           .replace(/^.*: (.*).*$/g, `$1`),
         img: $('#avatar-img img').attr('src') ? `https:${$('#avatar-img img').attr('src')}` : null,
-        age: $('.user_details')
-          .find('td')
-          .eq(3)
-          .text()
-          .replace(/\n/g, '')
-          .replace(/\t/g, ''),
         role: translate[$('#role').find('b').eq(1).textContent],
-        from: translate[$('.user_details .med img').attr('title')],
-        gender: translate[html.match(genderRegex).filter(Boolean)[0]],
+        country: translate[$('.user_details .med img').attr('title')],
+        gender: translate[html.match(genderRegex).filter(Boolean)[0]] || 'N/A',
         experience: html.replace(/\n/g, '').replace(/\t/g, '').match(expRegex)[0].replace('<b>', '').replace('</b>', ''),
-        createDate: html.match(createDateRegex)[0].replace('<b>', '').replace('</b>', '') || 'N/A',
+        createDate: formatCreateDate(html.match(createDateRegex)[0].replace('<b>', '').replace('</b>', '')) || 'N/A',
       }
     : null;
 };

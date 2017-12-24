@@ -7,9 +7,9 @@
     "test": "node test/test.js",
     "build": "webpack",
     "start": "webpack --watch",
-    "deploy": "npm version patch && npm publish ./",
-    "minor-deploy": "npm version minor && npm publish ./",
-    "major-deploy": "npm version major && npm publish ./"
+    "deploy:patch": "npm run build && npm version patch && npm publish ./",
+    "deploy:minor": "npm run build && npm version minor && npm publish ./",
+    "deploy:major": "npm run build && npm version major && npm publish ./"
   },
   "keywords": [
     "rutracker",
