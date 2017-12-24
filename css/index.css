@@ -148,6 +148,7 @@ h1.main-title {
 }
 
 h1.main-title.method {
+  border-bottom: none;
   text-transform:none;
 }
 
@@ -190,4 +191,13 @@ h3.sub-title {
   background: #efefef;
   margin-top: 15px;
   margin-bottom: 15px;
+}
+
+.hlt {
+  color: black;
+  font-weight: 600;
+}
+
+.require-auth {
+  content: 'Require Auth';
 }

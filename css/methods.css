@@ -1,0 +1,24 @@
+.top {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.top .main-title {
+  padding: 0;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.require-auth {
+  margin-top: 8px;
+  margin-left: 20px;
+  position: relative;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 5px 15px;
+  background: rgb(255, 59, 48);
+  color: #ffdede;
+  border-radius: 3px;
+}

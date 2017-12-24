@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>search</title>
+  <link rel="stylesheet" href="../css/fonts.css">
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/code.css">
+  <link rel="stylesheet" href="../css/methods.css">
+</head>
+<body>
+  <div class="top">
+    <h1 class="main-title method">.search()</h1>
+    <div class="require-auth">Auth</div>
+  </div>
+  <h3 class="sub-title">Description:</h3>
+  <p>Method <span class="code">.search()</span> is used for searching for torrents. Method takes 3 arguments. First is the your query for search, second is the sort parameter and third is the direction for sorting.</p>
+  <div class="divider"></div>
+  <h3 class="sub-title">Arguments:</h3>
+  <div class="stylish-code">
+    <p>
+      <span class="cm">(query, sortBy, direction)</span>
+    </p>
+    <p>
+      <span class="s">query</span>: <span class="cs">String</span>
+    </p>
+    <p>
+      <span class="s">sortBy</span>: <span class="cs">String</span>
+    </p>
+    <p>
+      <span class="s">direction</span>: <span class="cs">Boolean</span>
+    </p>
+  </div>
+  <p>
+    <span class="code">sortBy</span>
+    <span> can be any of these:</span>
+    <span class="code">'size'</span>
+    <span class="code">'date'</span>
+    <span class="code">'title'</span>
+    <span class="code">'seeds'</span>
+    <span class="code">'leechs'</span>
+    <span class="code">'downloads'</span>
+  </p>
+  <div class="el"></div>
+  <p>
+    <span class="code">direction</span>
+    <span>can be: </span>
+    <span class="code">true</span>
+    <span>or</span>
+    <span class="code">false</span>
+  </p>
+  <p class="el"></p>
+  <p>If <span class="code">direction</span> is <span class="code">true</span> you will get the results sorted from <span class="hlt">min</span> to <span class="hlt">max</span>. Vice versa if direction is <span class="code">false</span></p>
+  <div class="divider"></div>
+  <h3>Returns:</h3>
+  <p class="el"></p>
+  <p><span class="code">Promise</span> with response:</p>
+  <div class="stylish-code">
+    <p>[</p>
+    <p><span class="t"></span>{</p>
+    <p>
+      <span class="t2"></span>
+      <span class="s">id</span>: <span class="cs">String</span>,
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="s">status</span>: <span class="cs">String</span>,
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="s">title</span>: <span class="cs">String</span>,
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="s">author</span>: <span class="cs">String</span>,
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="s">category</span>: {
+    </p>
+    <p>
+      <span class="t3"></span>
+      <span class="s">id</span>: <span class="cs">String</span>,
+    </p>
+    <p>
+      <span class="t3"></span>
+      <span class="s">name</span>: <span class="cs">String</span>,
+    </p>
+    <p>
+      <span class="t2"></span>},
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="s">size</span>: <span class="cs">Number</span>,
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="s">seeds</span>: <span class="cs">Number</span>,
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="s">leechs</span>: <span class="cs">Number</span>,
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="s">downloads</span>: <span class="cs">Number</span>,
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="s">uploadDate</span>: <span class="cs">Date</span>,
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="s">url</span>: <span class="cs">String</span>,
+    </p>
+    <p><span class="t"></span>},</p>
+    <p><span class="t"></span><span class="cm">// ...</span></p>
+    <p>]</p>
+  </div>
+  <p>
+    <span class="code">status</span>
+    <span> can be: </span>
+    <span class="code">'approved'</span>
+    <span class="code">'doubtfully'</span>
+    <span class="code">'not-approved'</span>
+    <span class="code">'temporary'</span>
+  </p>
+  <div class="divider"></div>
+  <h3 class="sub-title">How to use:</h3>
+  <p>After user logged in you can simply call method <span class="code">.search()</span></p>
+  <p>For example, we want to search for <span class="hlt">'Star Wars'</span> then sort by size from biggest to smallest.</p>
+  <div class="stylish-code">
+    <p>
+      <span class="v">rutracker</span><span class="f">.search</span>(<span class="s">'Star Wars'</span>, <span class="s">'size'</span>, <span class="c">false</span>)
+    </p>
+    <p>
+      <span class="t"></span><span class="f">.then</span>((<span class="v">response</span>) <span class="a">=></span> {
+    </p>
+    <p>
+      <span class="t"></span><span class="t"></span><span class="cm">// ...</span>
+    </p>
+    <p>
+      <span class="t"></span>})
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="f">.catch</span>((<span class="v">err</span>) <span class="a">=></span> {
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="cm">// handle errors here</span>
+    </p>
+    <p>
+      <span class="t"></span>
+      });
+    </p>
+  </div>
+</body>
+</html>
