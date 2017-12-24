@@ -147,6 +147,10 @@ h1.main-title {
   border-bottom: 1px solid #efefef;
 }
 
+h1.main-title.method {
+  text-transform:none;
+}
+
 h3.sub-title {
   color: #404040;
   margin-bottom: 20px;

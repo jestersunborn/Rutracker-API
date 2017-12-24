@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Login</title>
+  <link rel="stylesheet" href="../css/fonts.css">
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/code.css">
+</head>
+<body>
+  <h1 class="main-title method">.login()</h1>
+  <h3 class="sub-title">Description:</h3>
+  <p>Method <span class="code">.login()</span> is used for logging in the user. Method takes 3 arguments. First is the username, second is the password and third is captcha answer.</p>
+  <div class="divider"></div>
+  <h3 class="sub-title">How to use:</h3>
+  <div class="stylish-code">
+    <p>
+      <span class="d">const</span> <span class="v">username</span> <span class="o">=</span> <span class="s">'username'</span>;
+    </p>
+    <p>
+      <span class="d">const</span> <span class="v">password</span> <span class="o">=</span> <span class="s">'password'</span>;
+    </p>
+    <p class="el"></p>
+    <p>
+      <span class="v">rutracker</span><span class="f">.login</span>(<span class="v">username</span>, <span class="v">password</span>, <span class="v">answer</span>) <span class="cm">// answer is optional argument</span>
+    </p>
+  </div>
+  <p>All methods (include <span class="code">.login()</span>) returns the Promise. Inside of promise callback login pass the cookie</p>
+  <div class="stylish-code">
+    <p>
+      <span class="t"></span><span class="f">.then</span>((<span class="v">cookie</span>) <span class="a">=></span> {
+    </p>
+    <p>
+      <span class="t"></span><span class="t"></span><span class="cm">// here we can save our cookie to use them later</span>
+    </p>
+    <p>
+      <span class="t"></span>})
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="f">.catch</span>((<span class="v">err</span>) <span class="a">=></span> {
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="cm">// handle errors here</span>
+    </p>
+    <p>
+      <span class="t"></span>
+      });
+    </p>
+  </div>
+</body>
+</html>
