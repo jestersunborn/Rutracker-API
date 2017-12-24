@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Get Started</title>
+  <link rel="stylesheet" href="../fonts/fonts.css">
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/code.css">
+</head>
+<body>
+   <h1 class="main-title">get started</h1>
+   <p>First of all we need to import <span class="code">rutracker-api-2</span> in your code:</p>
+   <div class="stylish-code">
+     <p>
+       <span class="d">const</span> <span class="v">RutrackerAPI</span> <span class="o">=</span> <span class="f">require</span>(<span class="s">'rutracker-api-2'</span>);
+     </p>
+     <p>
+       <span class="cm">// or if you use the es6 imports you can do this:</span>
+     </p>
+     <p>
+       <span class="d">import</span> <span class="v">RutrackerAPI</span> <span class="d">from</span> <span class="s">'rutracker-api-2'</span>;
+     </p>
+   </div>
+   <p>Now we should create an object from our <span class="code">RutrackerAPI</span>:</p>
+   <div class="stylish-code">
+     <p>
+       <span class="d">const</span> <span class="v">rutracker</span> <span class="o">=</span> <span class="d">new</span> <span class="f">RutrackerAPI</span>();
+     </p>
+   </div>
+   <p>Let's login our user and try to search something:</p>
+   <div class="stylish-code">
+     <p>
+       <span class="d">const</span> <span class="v">username</span> <span class="o">=</span> <span class="s">'username'</span>;
+     </p>
+     <p>
+       <span class="d">const</span> <span class="v">password</span> <span class="o">=</span> <span class="s">'password'</span>;
+     </p>
+     <p class="el"></p>
+     <p>
+       <span class="v">rutracker</span><span class="f">.login</span>(<span class="v">username</span>, <span class="v">password</span>)
+     </p>
+     <p>
+       <span class="t"></span><span class="f">.then</span>((<span class="v">cookie</span>) <span class="a">=></span> {
+     </p>
+     <p>
+       <span class="t"></span><span class="t"></span><span class="cm">// here we can save our cookie to use them later</span>
+     </p>
+     <p>
+       <span class="t"></span>})
+     </p>
+     <p>
+       <span class="t"></span><span class="cm">// Searching for Inception, sorted by size from min to max</span>
+     </p>
+     <p>
+       <span class="t"></span><span class="f">.then</span>(() <span class="a">=></span> <span class="v">rutracker</span><span class="f">.search</span>(<span class="s">'Inception'</span>, <span class="s">'size'</span>,
+       <span class="c">true</span>))
+     </p>
+     <p>
+       <span class="t"></span>
+       <span class="f">.then</span>((<span class="v">results</span>) <span class="a">=></span> <span class="cl">console.log</span>(<span class="v">results</span>))
+     </p>
+     <p>
+       <span class="t"></span>
+       <span class="f">.catch</span>((<span class="v">err</span>) <span class="a">=></span> {
+     </p>
+     <p>
+       <span class="t2"></span>
+       <span class="cm">// handle errors here</span>
+     </p>
+     <p>
+       <span class="t"></span>
+       });
+     </p>
+   </div>
+   <p>If <span class="code">username</span> or <span class="code">password</span> are wrong rutracker wants us to enter a captcha</p>
+   <p>We can get captcha with <span class="code">getCaptcha</span> method</p>
+   <div class="stylish-code">
+     <p>
+       <span class="v">rutracker</span><span class="f">.getCaptcha</span>()
+     </p>
+     <p>
+       <span class="t"></span>
+       <span class="f">.then</span>((<span class="v">captcha</span>) <span class="a">=></span> {
+     </p>
+     <p>
+       <span class="t2"></span>
+       <span class="cl">console.log</span>(<span class="v">captcha</span><span class="o">.</span><span class="v">img</span>);
+     </p>
+     <p>
+       <span class="t2"></span>
+       <span class="cl">console.log</span>(<span class="v">captcha</span><span class="o">.</span><span class="v">code</span>);
+       <span class="cm">// You do not need to use this</span>
+     </p>
+     <p>
+       <span class="t2"></span>
+       <span class="cl">console.log</span>(<span class="v">captcha</span><span class="o">.</span><span class="v">capSid</span>);
+       <span class="cm">// You do not need to use this</span>
+     </p>
+     <p>
+       <span class="t2"></span>
+       <span class="d">const</span> <span class="v">answer</span> <span class="o">=</span> <span class="f">getAnswerFromSomewhere</span>(<span class="v">captcha</span>);
+     </p>
+     <p>
+       <span class="t2"></span>
+       <span class="d">return</span>
+       <span class="v">answer</span>;
+     </p>
+     <p>
+       <span class="t"></span>})
+     </p>
+     <p>
+       <span class="t"></span>
+       <span class="f">.then</span>((<span class="v">answer</span>) <span class="a">=></span> <span class="v">rutracker</span><span class="f">.login</span>(<span class="v">username</span>, <span class="v">password</span>, <span class="v">answer</span>))
+     </p>
+     <p>
+       <span class="t"></span>
+       <span class="cm">// ...</span>
+     </p>
+   </div>
+   <p>Before using <span class="code">login</span> you can check if you need a captcha, if method return <span class="code">null</span> then you can login, if not then you should enter a captcha</p>
+   <p class="el"></p>
+   <p>Lets see another example:</p>
+   <p>We have already logging once. And we do not want to do this again. If we saved cookie once, we can use them now:</p>
+   <div class="stylish-code">
+     <p>
+       <span class="d">const</span> <span class="v">cookie</span> <span class="o">=</span> <span class="f">getSavedCookieFromSomewhere</span>();
+     </p>
+     <p>
+       <span class="cm">// Pass the cookie to RutrackerAPI constructor</span>
+     </p>
+     <p>
+       <span class="d">const</span> <span class="v">rutracker</span> <span class="o">=</span> <span class="d">new</span> <span class="f">RutrackerAPI</span>(<span class="v">cookie</span>);
+     </p>
+     <p>
+       <span class="cm">// Now we do not have to login again</span>
+     </p>
+     <p>
+       <span class="v">rutracker</span><span class="f">.search</span>(<span class="s">'Inception'</span>, <span class="s">'date'</span>, <span class="c">false</span>)
+     </p>
+     <p>
+       <span class="t"></span>
+       <span class="cm">// ...</span>
+     </p>
+   </div>
+</body>
+</html>
