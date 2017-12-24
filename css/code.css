@@ -1,0 +1,26 @@
+.stylish-code {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  display: block;
+  border-radius: 4px;
+  padding: 15px 20px;
+  background: #282c34;
+  color: #abb2bf;
+  font-family: 'Fira Code';
+}
+
+.el { height: 20px; }
+.t { padding-right: 20px; }
+.t2 { padding-right: 40px; }
+
+.cm { color: #5c6370; }
+
+.s { color: #98c379; }
+.d { color: #c678dd; }
+.v { color: #e06c75; }
+.f { color: #61afef; }
+.o { color: #56b6c2; }
+.a { color: #c678dd; }
+.c { color: #d19a66; }
+.cl { color: #56b6c2; }

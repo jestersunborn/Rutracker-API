@@ -1,0 +1,144 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: 'Open Sans';
+  background: white;
+  color: #404040;
+}
+
+iframe {
+  height: 100%;
+  width: 100%;
+}
+
+input[name=content] {
+  display: none;
+}
+
+.wrap {
+  height: 100%;
+  display: flex;
+  align-items:stretch;
+}
+
+.wrap .sidebar {
+  overflow-y: auto;
+  background: #f7f7f7;
+  width: 250px;
+  padding: 40px;
+}
+
+.wrap .sidebar li {
+  list-style: none;
+  margin-bottom: 20px;
+}
+
+.wrap .sidebar ul li label {
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 600;
+  color: #828282;
+  font-size: 16px;
+}
+
+.wrap .sidebar ul li label:hover {
+  color: #666;
+}
+
+.wrap .sidebar li input[name=content]:checked + label {
+  color: #404040;
+}
+
+.wrap .sidebar .sub-menu {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  padding-left: 20px;
+}
+
+.wrap .sidebar .sub-menu li {
+  margin-bottom: 10px;
+}
+
+.wrap .sidebar .sub-menu li label {
+  text-transform: none;
+  cursor: pointer;
+  letter-spacing: 2px;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.wrap .sidebar .sub-menu li input[name=content]:checked + label {
+  color: #404040;
+  font-weight: 600;
+}
+
+.wrap .content {
+  padding: 40px;
+  padding-bottom: 0;
+  width: calc(100% - 250px);
+  min-height: 100%;
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+h1.main-title {
+  text-transform:capitalize;
+  color: #404040;
+  font-weight: 900;
+  font-size: 40px;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #efefef;
+}
+
+h3.sub-title {
+  color: #404040;
+  margin-bottom: 20px;
+}
+
+.code {
+  border-radius: 3px;
+  padding: 2px 7px;
+  background: #f5f5f5;
+  color: black;
+  font-family: 'Fira Code';
+}
+
+.block-code {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  display: block;
+  border-radius: 3px;
+  padding: 15px 20px;
+  background: #f5f5f5;
+  color: black;
+  font-family: 'Fira Code';
+}
+
+.block-code p {
+  margin-bottom: 5px;
+}
+
+.block-code p:last-child {
+  margin-bottom: 0;
+}
+
+.divider {
+  height: 1px;
+  width: 100%;
+  background: #efefef;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
