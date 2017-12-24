@@ -9,6 +9,8 @@
   color: #abb2bf;
   font-family: 'Fira Code';
   font-size: 17px;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 
 .el { height: 20px; }
