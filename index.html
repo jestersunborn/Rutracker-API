@@ -5,8 +5,76 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Rutracker API</title>
+  <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-  <h1>Rutracker API</h1>
+  <div class="wrap">
+    <aside class="sidebar">
+      <ul>
+        <li>
+          <input id="hello" type="radio" name="content" checked>
+          <label for="hello">Hello</label>
+        </li>
+        <li>
+          <input id="installation" type="radio" name="content">
+          <label for="installation">Installation</label>
+        </li>
+        <li>
+          <input id="get-started" type="radio" name="content">
+          <label for="get-started">Get Started</label>
+        </li>
+        <li>
+          <input id="docs" class="sub-menu-toggler" type="radio" name="content">
+          <label for="docs">Docs</label>
+          <ul class="sub-menu">
+            <li>
+              <input type="radio" id="login" name="content">
+              <label for="login">login</label>
+            </li>
+            <li>
+              <input type="radio" id="getcaptcha" name="content">
+              <label for="getcaptcha">getCaptcha</label>
+            </li>
+            <li>
+              <input type="radio" id="search" name="content">
+              <label for="search">search</label>
+            </li>
+            <li>
+              <input type="radio" id="download" name="content">
+              <label for="download">download</label>
+            </li>
+            <li>
+              <input type="radio" id="getfullfileinfo" name="content">
+              <label for="getfullfileinfo">getFullFileInfo</label>
+            </li>
+            <li>
+              <input type="radio" id="getcategories" name="content">
+              <label for="getcategories">getCategories</label>
+            </li>
+            <li>
+              <input type="radio" id="getuserinfo" name="content">
+              <label for="getuserinfo">getUserInfo</label>
+            </li>
+            <li>
+              <input type="radio" id="getstats" name="content">
+              <label for="getstats">getStats</label>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <input id="testing" type="radio" name="content">
+          <label for="testing">Testing</label>
+        </li>
+        <li>
+          <input id="contributing" type="radio" name="content">
+          <label for="contributing">Contributing</label>
+        </li>
+      </ul>
+    </aside>
+    <main class="content">
+      <iframe id="content" src="./table-of-contents/hello.html" frameborder="0"></iframe>
+    </main>
+  </div>
+  <script src="./js/index.js"></script>
 </body>
 </html>
