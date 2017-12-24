@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>getUserInfo</title>
+  <link rel="stylesheet" href="../css/fonts.css">
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/code.css">
+  <link rel="stylesheet" href="../css/methods.css">
+</head>
+<body>
+  <div class="top">
+    <h1 class="main-title method">.getUserInfo()</h1>
+  </div>
+  <h3 class="sub-title">Description:</h3>
+  <p>Method <span class="code">.getUserInfo()</span> is used for getting the basic information user. Method takes one argument - the <span class="code">id</span> of the user.</p>
+  <div class="divider"></div>
+  <h3 class="sub-title">Arguments:</h3>
+  <div class="stylish-code">
+    <p>
+      <span class="s">id</span>: <span class="cs">String</span>
+    </p>
+  </div>
+  <div class="divider"></div>
+  <h3>Returns:</h3>
+  <p class="el"></p>
+  <p><span class="code">Promise</span> with response:</p>
+  <div class="stylish-code">
+    <p>{</p>
+    <p>
+      <span class="t"></span>
+      <span class="s">username</span>: <span class="cs">String</span>,
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="s">img</span>: <span class="cs">String</span>,
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="s">age</span>: <span class="cs">String</span>,
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="s">role</span>: <span class="cs">String</span>,
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="s">country</span>: <span class="cs">String</span>,
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="s">gender</span>: <span class="cs">String</span>,
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="s">experience</span>: <span class="cs">String</span>,
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="s">createDate</span>: <span class="cs">String</span>,
+      <span class="cm">// Temporary the String, will be the Date in the future ...</span>
+    </p>
+    <p>}</p>
+  </div>
+  <p>
+    <span class="code">gender</span>
+    <span> can be: </span>
+    <span class="code">'male'</span>,
+    <span class="code">'female'</span>
+    <span> or </span>
+    <span class="code">'N/A'</span>
+  </p>
+  <p class="el"></p>
+  <p><span class="code">country</span> can be one of these: <a href="https://github.com/jestersunborn/rutracker-api/blob/master/src/intl/countries.js" class="link" target="_blank">list of all countries on Rutracker.org</a></p>
+  <div class="divider"></div>
+  <h3 class="sub-title">How to use:</h3>
+  <div class="stylish-code">
+    <p>
+      <span class="v">rutracker</span><span class="f">.getUserInfo</span>(<span class="s">'0123456789'</span>)
+    </p>
+    <p>
+      <span class="t"></span><span class="f">.then</span>((<span class="v">response</span>) <span class="a">=></span> {
+    </p>
+    <p>
+      <span class="t"></span><span class="t"></span><span class="cm">// ...</span>
+    </p>
+    <p>
+      <span class="t"></span>})
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="f">.catch</span>((<span class="v">err</span>) <span class="a">=></span> {
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="cm">// handle errors here</span>
+    </p>
+    <p>
+      <span class="t"></span>
+      });
+    </p>
+  </div>
+</body>
+</html>

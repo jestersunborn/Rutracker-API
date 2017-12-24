@@ -1,33 +1,3 @@
-#### .getCategories(deep: Boolean);
-return Promise with response:
-```javascript
-// deep is false
-[{
-  id: String,
-  name: String,
-}]
-// deep is true
-[{
-  id: String,
-  name: String,
-  subCategories: [{
-    id: String,
-    name: String,
-    // ...
-  }]
-}]
-```
-
-Simple usage:
-
-```javascript
-rutracker.getCategories(deep) // deep - true or false
-  .then((categories) => {
-    console.log(categories);
-  })
-  .catch((err) => console.error(err));
-```
-
 #### .getUserInfo(id: String);
 return Promise with response:
 ```javascript
