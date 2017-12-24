@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>getfullfileinfo</title>
+  <link rel="stylesheet" href="../css/fonts.css">
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/code.css">
+  <link rel="stylesheet" href="../css/methods.css">
+</head>
+<body>
+  <div class="top">
+    <h1 class="main-title method">.getFullFileInfo()</h1>
+    <div class="require-auth">Auth</div>
+  </div>
+  <h3 class="sub-title">Description:</h3>
+  <p>Method <span class="code">.getFullFileInfo()</span> is used for getting the full info about torrent file (from page with this torrent). Method takes one argument. The <span class="code">id</span> of page.</p>
+  <div class="divider"></div>
+  <h3 class="sub-title">Arguments:</h3>
+  <div class="stylish-code">
+    <p>
+      <span class="s">id</span>: <span class="cs">String</span>
+    </p>
+  </div>
+  <div class="divider"></div>
+  <h3>Returns:</h3>
+  <p class="el"></p>
+  <p><span class="code">Promise</span> with response:</p>
+  <div class="stylish-code">
+    <p>{</p>
+    <p>
+      <span class="t"></span>
+      <span class="s">img</span>: <span class="cs">String</span>,
+      <span class="cm">// url to poster</span>
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="s">body</span>: <span class="cs">String</span>,
+      <span class="cm">// Full text with HTML tags inside (Too lazy to parse all these things)</span>
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="s">categories</span>: [
+    </p>
+    <p>
+      <span class="t2"></span>{
+    </p>
+    <p>
+      <span class="t3"></span>
+      <span class="s">id</span>: <span class="cs">String</span>,
+    </p>
+    <p>
+      <span class="t3"></span>
+      <span class="s">name</span>: <span class="cs">String</span>,
+    </p>
+    <p>
+      <span class="t2"></span>},
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="cm">// ...</span>
+    </p>
+    <p>
+      <span class="t"></span>],
+    </p>
+    <p>}</p>
+  </div>
+  <div class="divider"></div>
+  <h3 class="sub-title">How to use:</h3>
+  <div class="stylish-code">
+    <p>
+      <span class="v">rutracker</span><span class="f">.getFullFileInfo</span>(<span class="s">'0123456789'</span>)
+    </p>
+    <p>
+      <span class="t"></span><span class="f">.then</span>((<span class="v">response</span>) <span class="a">=></span> {
+    </p>
+    <p>
+      <span class="t"></span><span class="t"></span><span class="cm">// ...</span>
+    </p>
+    <p>
+      <span class="t"></span>})
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="f">.catch</span>((<span class="v">err</span>) <span class="a">=></span> {
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="cm">// handle errors here</span>
+    </p>
+    <p>
+      <span class="t"></span>
+      });
+    </p>
+  </div>
+</body>
+</html>

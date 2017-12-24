@@ -27,14 +27,36 @@
   <div class="divider"></div>
   <h3>Returns:</h3>
   <p class="el"></p>
-  <p><span class="code">Promise</span> with response:</p>
-  <div class="stylish-code"></div>
+  <p><span class="code">Promise</span> with <span class="code">ReadableStream</span> in response.</p>
   <div class="divider"></div>
   <h3 class="sub-title">How to use:</h3>
   <p></p>
   <div class="stylish-code">
     <p>
-      <span class="v">rutracker</span><span class="f">.download</span>(<span class="s">'01234567890'</span>)
+      <span class="v">rutracker</span><span class="f">.download</span>(<span class="s">'0123456789'</span>)
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="f">.then</span>((<span class="v">res</span>) <span class="a">=></span> {
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="cm">// ...</span>
+    </p>
+    <p>
+      <span class="t"></span>
+      })
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="f">.catch</span>(<span class="v">err</span>) <span class="a">=></span> {
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="cm">// handle error here</span>
+    </p>
+    <p>
+      <span class="t"></span>});
     </p>
   </div>
 </body>
