@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>getCaptcha</title>
+  <link rel="stylesheet" href="../css/fonts.css">
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/code.css">
+</head>
+<body>
+  <h1 class="main-title method">.getCaptcha()</h1>
+  <h3 class="sub-title">Description:</h3>
+  <p>Method <span class="code">.getCaptcha()</span> is used for get a captcha. Method takes no arguments.</p>
+  <div class="divider"></div>
+  <h3>Returns:</h3>
+  <p class="el"></p>
+  <p><span class="code">Promise</span> with captcha.</p>
+  <div class="stylish-code">
+    <p>{</p>
+    <p>
+      <span class="t"></span>
+      <span class="s">img</span>: <span class="cs">String,</span> <span class="cm">// url to image</span>
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="s">capSid</span>: <span class="cs">String,</span> <span class="cm">// cap_sid field for request</span>
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="s">code</span>: <span class="cs">String,</span> <span class="cm">// code field for request</span>
+    </p>
+    <p>}</p>
+  </div>
+  <p>You do not need to use <span class="code">capSid</span> and <span class="code">code</span> fields.</p>
+  <div class="divider"></div>
+  <h3 class="sub-title">How to use:</h3>
+  <div class="stylish-code">
+    <p>
+      <span class="v">rutracker</span><span class="f">.getCaptcha</span>()
+    </p>
+    <p>
+      <span class="t"></span><span class="f">.then</span>(({ <span class="v">img</span> }) <span class="a">=></span> {
+    </p>
+    <p>
+      <span class="t"></span><span class="t"></span><span class="cm">// ...</span>
+    </p>
+    <p>
+      <span class="t"></span>})
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="f">.catch</span>((<span class="v">err</span>) <span class="a">=></span> {
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="cm">// handle errors here</span>
+    </p>
+    <p>
+      <span class="t"></span>
+      });
+    </p>
+  </div>
+</body>
+</html>
