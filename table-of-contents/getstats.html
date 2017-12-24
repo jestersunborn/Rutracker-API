@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>getStats</title>
+  <link rel="stylesheet" href="../css/fonts.css">
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/code.css">
+  <link rel="stylesheet" href="../css/methods.css">
+</head>
+<body>
+  <div class="top">
+    <h1 class="main-title method">.getStats()</h1>
+    <div class="require-auth">Auth</div>
+  </div>
+  <h3 class="sub-title">Description:</h3>
+  <p>Method <span class="code">.getStats()</span> is used for getting the statistics of rutracker.</p>
+  <div class="divider"></div>
+  <h3>Returns:</h3>
+  <p class="el"></p>
+  <p><span class="code">Promise</span> with response:</p>
+  <div class="stylish-code">
+    <p>{</p>
+    <p>
+      <span class="t"></span>
+      <span class="s">users</span>: <span class="cs">Number</span>,
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="s">torrents</span>: <span class="cs">Number</span>,
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="s">live</span>: <span class="cs">Number</span>,
+      <span class="cm">// Those torrents that users distribute right now</span>
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="s">size</span>: {
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="s">value</span>: <span class="cs">Number</span>,
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="s">measure</span>: <span class="cs">String</span>,
+    </p>
+    <p>
+      <span class="t"></span>},
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="s">peer</span>: <span class="cs">Number</span>,
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="s">seed</span>: <span class="cs">Number</span>,
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="s">leech</span>: <span class="cs">Number</span>,
+    </p>
+    <p>}</p>
+  </div>
+  <div class="divider"></div>
+  <h3 class="sub-title">How to use:</h3>
+  <div class="stylish-code">
+    <p>
+      <span class="v">rutracker</span><span class="f">.getStats</span>()
+    </p>
+    <p>
+      <span class="t"></span><span class="f">.then</span>((<span class="v">response</span>) <span class="a">=></span> {
+    </p>
+    <p>
+      <span class="t"></span><span class="t"></span><span class="cm">// ...</span>
+    </p>
+    <p>
+      <span class="t"></span>})
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="f">.catch</span>((<span class="v">err</span>) <span class="a">=></span> {
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="cm">// handle errors here</span>
+    </p>
+    <p>
+      <span class="t"></span>
+      });
+    </p>
+  </div>
+</body>
+</html>
