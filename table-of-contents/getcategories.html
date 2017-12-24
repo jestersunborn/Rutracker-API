@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>getCategories</title>
+  <link rel="stylesheet" href="../css/fonts.css">
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/code.css">
+  <link rel="stylesheet" href="../css/methods.css">
+</head>
+<body>
+  <div class="top">
+    <h1 class="main-title method">.getCategories()</h1>
+    <div class="require-auth">Auth</div>
+  </div>
+  <h3 class="sub-title">Description:</h3>
+  <p>Method <span class="code">.getCategories()</span> is used for getting the all categories on <a href="https://rutracker.org/forum/index.php" class="link">Rutracker.org</a>. Method takes one argument - <span class="code">deep</span>.</p>
+  <div class="divider"></div>
+  <h3 class="sub-title">Arguments:</h3>
+  <div class="stylish-code">
+    <p>
+      <span class="s">deep</span>: <span class="cs">Boolean</span>
+    </p>
+  </div>
+  <div class="divider"></div>
+  <h3>Returns:</h3>
+  <p class="el"></p>
+  <p><span class="code">Promise</span> with response:</p>
+  <div class="stylish-code">
+    <p>
+      <span class="cm">// if 'deep' is false</span>
+    </p>
+    <p>[</p>
+    <p>
+      <span class="t"></span>{
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="s">id</span>: <span class="cs">String</span>,
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="s">name</span>: <span class="cs">String</span>,
+    </p>
+    <p>
+      <span class="t"></span>},
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="cm">// ...</span>
+    </p>
+    <p>]</p>
+    <p><span class="cm">// if 'deep' is true</span></p>
+    <p>[</p>
+    <p>
+      <span class="t"></span>{
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="s">id</span>: <span class="cs">String</span>,
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="s">name</span>: <span class="cs">String</span>,
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="s">subCategories</span>: [
+    </p>
+    <p>
+      <span class="t3"></span>{
+    </p>
+    <p>
+      <span class="t4"></span>
+      <span class="s">id</span>: <span class="cs">String</span>,
+    </p>
+    <p>
+      <span class="t4"></span>
+      <span class="s">name</span>: <span class="cs">String</span>,
+    </p>
+    <p>
+      <span class="t3"></span>},
+    </p>
+    <p>
+      <span class="t3"></span>
+      <span class="cm">// ...</span>
+    </p>
+    <p>
+      <span class="t"></span>},
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="cm">// ...</span>
+    </p>
+    <p>]</p>
+  </div>
+  <div class="divider"></div>
+  <h3 class="sub-title">How to use:</h3>
+  <div class="stylish-code">
+    <p>
+      <span class="v">rutracker</span><span class="f">.getCategories</span>()
+    </p>
+    <p>
+      <span class="t"></span><span class="f">.then</span>((<span class="v">response</span>) <span class="a">=></span> {
+    </p>
+    <p>
+      <span class="t"></span><span class="t"></span><span class="cm">// ...</span>
+    </p>
+    <p>
+      <span class="t"></span>})
+    </p>
+    <p>
+      <span class="t"></span>
+      <span class="f">.catch</span>((<span class="v">err</span>) <span class="a">=></span> {
+    </p>
+    <p>
+      <span class="t2"></span>
+      <span class="cm">// handle errors here</span>
+    </p>
+    <p>
+      <span class="t"></span>
+      });
+    </p>
+  </div>
+</body>
+</html>

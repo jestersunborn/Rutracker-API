@@ -1,26 +1,3 @@
-#### .getFullFileInfo(id: String);
-return Promise with response:
-```javascript
-{
-  img: String, // url to poster
-  body: String, // Full description with some html tags
-  categories: [{
-    id: String,
-    name: String
-  }]
-}
-```
-
-Simple usage:
-
-```javascript
-rutracker.getFullFileInfo('12345')
-  .then((res) => {
-    console.log(res);
-  })
-  .catch((err) => console.error(err));
-```
-
 #### .getCategories(deep: Boolean);
 return Promise with response:
 ```javascript
