@@ -80,10 +80,10 @@ export const getCountOfPages = (html) => {
   return {
     count: isResult ? +$('#main_content_wrap .bottom_info .nav p[style="float: right"]')
       .text()
-      .replace(/(.*), ([0-9]*).*$/g, '$2') : 0,
+      .replace(/(.*), ([0-9]*).*$/g, '$2') : 1,
     id: isResult ? $('#main_content_wrap .bottom_info .nav p[style="float: right"] a:first-child')
       .attr('href')
-      .replace(/.*search_id=(.*)&start.*$/g, '$1') : 0,
+      .replace(/.*search_id=(.*)&start.*$/g, '$1') : 1,
   };
 };
 
