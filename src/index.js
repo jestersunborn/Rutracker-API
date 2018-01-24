@@ -181,10 +181,14 @@ export default class RutrackerApi {
           });
           res.on('end', () => {
             const { count, id } = getCountOfPages(data, HOST);
-            Promise.all(this.fetchPagination(count, id))
-              .then(res => res.reduce((acc, c) => [...acc, ...c], []))
-              .then(total => resolve(total))
-              .catch(reject);
+            if (count && id) {
+              Promise.all(this.fetchPagination(count, id))
+                .then(res => res.reduce((acc, c) => [...acc, ...c], []))
+                .then(total => resolve(total))
+                .catch(reject);
+            } else {
+              resolve([]);
+            }
           });
         } else {
           reject(new Error(res.statusCode));

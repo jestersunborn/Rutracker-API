@@ -76,13 +76,14 @@ export const parseSearch = (html, host) => {
 // Get count of pages
 export const getCountOfPages = (html) => {
   const $ = cheerio.load(html);
+  const isResult = Boolean($('#main_content_wrap .bottom_info .nav p[style="float: right"]').text());
   return {
-    count: +$('#main_content_wrap .bottom_info .nav p[style="float: right"]')
+    count: isResult ? +$('#main_content_wrap .bottom_info .nav p[style="float: right"]')
       .text()
-      .replace(/(.*), ([0-9]*).*$/g, '$2'),
-    id: $('#main_content_wrap .bottom_info .nav p[style="float: right"] a:first-child')
+      .replace(/(.*), ([0-9]*).*$/g, '$2') : 0,
+    id: isResult ? $('#main_content_wrap .bottom_info .nav p[style="float: right"] a:first-child')
       .attr('href')
-      .replace(/.*search_id=(.*)&start.*$/g, '$1'),
+      .replace(/.*search_id=(.*)&start.*$/g, '$1') : 0,
   };
 };
 
