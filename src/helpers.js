@@ -76,12 +76,12 @@ export const parseSearch = (html, host) => {
 // Get count of pages
 export const getCountOfPages = (html) => {
   const $ = cheerio.load(html);
-  const isResult = Boolean($('#main_content_wrap .bottom_info .nav p[style="float: right"]').text());
+  const isOnlyOnePage = Boolean($('#main_content_wrap .bottom_info .nav p[style="float: right"]').text());
   return {
-    count: isResult ? +$('#main_content_wrap .bottom_info .nav p[style="float: right"]')
+    count: isOnlyOnePage ? +$('#main_content_wrap .bottom_info .nav p[style="float: right"]')
       .text()
       .replace(/(.*), ([0-9]*).*$/g, '$2') : 1,
-    id: isResult ? $('#main_content_wrap .bottom_info .nav p[style="float: right"] a:first-child')
+    id: isOnlyOnePage ? $('#main_content_wrap .bottom_info .nav p[style="float: right"] a:first-child')
       .attr('href')
       .replace(/.*search_id=(.*)&start.*$/g, '$1') : 1,
   };
@@ -154,7 +154,6 @@ export const parseCaptcha = (html) => {
     : null;
 };
 
-
 export const parseUserInfo = (html) => {
   const $ = cheerio.load(html);
   const genderRegex = /(Мужской|Женский)/gm;
@@ -187,38 +186,46 @@ export const parseStats = (html) => {
     .eq(2)
     .text();
   return {
-    users: Number($('#board_stats_wrap .med')
-      .find('p')
-      .eq(0)
-      .find('b')
-      .eq(0)
-      .html()
-      .replace(/,/g, '')),
-    torrents: Number($('#board_stats_wrap .med')
-      .find('p')
-      .eq(1)
-      .find('b')
-      .eq(0)
-      .html()
-      .replace(/,/g, '')),
-    live: Number($('#board_stats_wrap .med')
-      .find('p')
-      .eq(1)
-      .find('b')
-      .eq(1)
-      .html()
-      .replace(/,/g, '')),
+    users: Number(
+      $('#board_stats_wrap .med')
+        .find('p')
+        .eq(0)
+        .find('b')
+        .eq(0)
+        .html()
+        .replace(/,/g, '')
+      ),
+    torrents: Number(
+      $('#board_stats_wrap .med')
+        .find('p')
+        .eq(1)
+        .find('b')
+        .eq(0)
+        .html()
+        .replace(/,/g, '')
+      ),
+    live: Number(
+      $('#board_stats_wrap .med')
+        .find('p')
+        .eq(1)
+        .find('b')
+        .eq(1)
+        .html()
+        .replace(/,/g, '')
+      ),
     size: {
       value: Number(size.match(/([0-9.]*)/g)[0]),
       measure: size.match(/([a-zA-Z]*)$/g)[0],
     },
-    peer: Number($('#board_stats_wrap .med')
-      .find('p')
-      .eq(2)
-      .find('b')
-      .eq(0)
-      .html()
-      .replace(/,/g, '')),
+    peer: Number(
+      $('#board_stats_wrap .med')
+        .find('p')
+        .eq(2)
+        .find('b')
+        .eq(0)
+        .html()
+        .replace(/,/g, '')
+      ),
     seed: Number($('#board_stats_wrap .seedmed').text().replace(/,/g, '')),
     leech: Number($('#board_stats_wrap .seedmed').text().replace(/,/g, '')),
   };
