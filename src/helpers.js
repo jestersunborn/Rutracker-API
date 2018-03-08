@@ -193,7 +193,7 @@ export const parseStats = (html) => {
         .find('b')
         .eq(0)
         .html()
-        .replace(/,/g, '')
+        .replace(/,/g, ''),
       ),
     torrents: Number(
       $('#board_stats_wrap .med')
@@ -202,7 +202,7 @@ export const parseStats = (html) => {
         .find('b')
         .eq(0)
         .html()
-        .replace(/,/g, '')
+        .replace(/,/g, ''),
       ),
     live: Number(
       $('#board_stats_wrap .med')
@@ -211,7 +211,7 @@ export const parseStats = (html) => {
         .find('b')
         .eq(1)
         .html()
-        .replace(/,/g, '')
+        .replace(/,/g, ''),
       ),
     size: {
       value: Number(size.match(/([0-9.]*)/g)[0]),
@@ -224,7 +224,7 @@ export const parseStats = (html) => {
         .find('b')
         .eq(0)
         .html()
-        .replace(/,/g, '')
+        .replace(/,/g, ''),
       ),
     seed: Number($('#board_stats_wrap .seedmed').text().replace(/,/g, '')),
     leech: Number($('#board_stats_wrap .seedmed').text().replace(/,/g, '')),
