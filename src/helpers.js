@@ -95,8 +95,9 @@ export const parseFullInfo = (html) => {
   const categories = $('.nav.w100.pad_2 a').map((index, a) => $(a).text()).get();
   const seed = $('.seed > b').text();
   const leech = $('.leech > b').text();
+  const hash = $('#tor-hash').text();
 
-  return { img, body, categories, seed, leech };
+  return { img, body, categories, seed, leech, hash };
 };
 
 // Parse categories
