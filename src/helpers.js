@@ -93,7 +93,11 @@ export const parseFullInfo = (html) => {
   const img = $('var.postImg').attr('title');
   const body = $('.post_body .post-font-serif1').text();
   const categories = $('.nav.w100.pad_2 a').map((index, a) => $(a).text()).get();
-  return { img, body, categories };
+  const seed = $('.seed > b').text();
+  const leech = $('.leech > b').text();
+  const hash = $('#tor-hash').text();
+
+  return { img, body, categories, seed, leech, hash };
 };
 
 // Parse categories
