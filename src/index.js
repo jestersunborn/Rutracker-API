@@ -317,6 +317,7 @@ export default class RutrackerApi {
       req.end();
     });
   }
+
   getStats() {
     return new Promise((resolve, reject) => {
       const options = {
