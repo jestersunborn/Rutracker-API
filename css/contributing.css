@@ -1,6 +1,4 @@
-.list {
-  padding-left: 20px;
-}
+.list { padding-left: 20px; }
 
 .list li { list-style: none; }
 
@@ -31,18 +29,14 @@
   background: rgb(88, 86, 214);
 }
 
-.sub-list {
-  padding-left: 20px;
-}
+.sub-list { padding-left: 20px; }
 
 .sub-list .sub-item {
   display: flex;
   align-items: center;
 }
 
-.sub-list .sub-item:before {
-  background: rgb(0, 122, 255);
-}
+.sub-list .sub-item:before { background: rgb(0, 122, 255); }
 
 .sub-list .sub-item > span {
   width: 100px;
@@ -66,10 +60,6 @@
   background: rgb(76, 217, 100);
 }
 
-.categories .pointer {
-  width: calc(100% * 68 / 810);
-}
+.categories .pointer { width: calc(100% * 68 / 810); }
 
-.done span {
-  text-decoration:line-through;
-}
+.done span { text-decoration:line-through; }
