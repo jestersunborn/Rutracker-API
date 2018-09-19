@@ -129,7 +129,7 @@ export const parseCategories = (html, deep) => {
   }
   return $(categories).map((index, category) => ({
     id: $(category).attr('id').replace('c-', ''),
-    name: translate[$(category).find('h3 a').text()],
+    name: $(category).find('h3 a').text(),
   })).get();
 };
 
