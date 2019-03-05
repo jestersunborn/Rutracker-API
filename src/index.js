@@ -120,6 +120,7 @@ export default class RutrackerApi {
       .fill(false)
       .map((_, index) => new Promise((resolve, reject) => {
         const query = encodeURIComponent(this.query);
+
         const path = `${SEARCH_PATH}?search_id=${id}&start=${index * 50}&nm=${query}`;
         const options = {
           hostname: HOST,
@@ -181,9 +182,10 @@ export default class RutrackerApi {
           });
           res.on('end', () => {
             const { count, id } = getCountOfPages(data, HOST);
+
             Promise.all(this.fetchPagination(count, id))
               .then(res => res.reduce((acc, c) => [...acc, ...c], []))
-              .then(total => resolve(total))
+              .then(resolve)
               .catch(reject);
           });
         } else {

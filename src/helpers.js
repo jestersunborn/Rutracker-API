@@ -43,55 +43,68 @@ const formatCreateDate = (date) => {
 
 const formatDate = (date) => {
   const d = new Date();
-  const regExp = /^([0-9]{2})-(.*)-([0-9]{2})([0-9]{2}):([0-9]{2})$/g;
+  const regExp = /^([0-9]{1,2})-(.*)-([0-9]{2})$/g;
+
   const year = `20${date.replace(regExp, `$3`)}`;
   d.setFullYear(Number(year));
+
   const month = getMonthNumber(date.replace(regExp, `$2`));
   d.setMonth(month);
+
   const day = date.replace(regExp, `$1`);
   d.setDate(Number(day));
-  const hours = Number(date.replace(regExp, `$4`));
-  const minutes = Number(date.replace(regExp, `$5`));
-  d.setHours(hours, minutes, 0);
+
+  d.setHours(0, 0, 0);
+
   return d;
 };
 
 // Parse search results
 export const parseSearch = (html, host) => {
   const $ = cheerio.load(html);
+
   const condition = $('#tor-tbl tbody').find('tr td:first-child').attr('colspan') === '10';
-  return !condition ? $('#tor-tbl tbody').find('tr').map((_, track) => ({
-    id: $(track).find('td.t-title .t-title a').attr('data-topic_id'),
-    status: translate[$(track).find('td:nth-child(2)').attr('title')],
-    shortName: $(track).find('td.t-title .t-title a').text(),
-    title: $(track).find('td.t-title .t-title a').text(),
-    author: $(track).find('td.u-name .u-name a ').text(),
-    category: {
-      id: $(track).find('td.f-name .f-name a').attr('href').replace(/.*?f=([0-9]*)$/g, '$1'),
-      name: $(track).find('td.f-name .f-name a').text(),
-    },
-    size: +$(track).find('td.tor-size u').html(),
-    seeds: +$(track).find('b.seedmed').html(),
-    leechs: +$(track).find('td.leechmed b').html(),
-    downloads: +$(track).find('td.number-format').html(),
-    uploadDate: formatDate($(track).find('td:last-child p').text()), // Upload date
-    url: `http://${host}/forum/viewtopic.php?t=${$(track).find('td.t-title .t-title a').attr('data-topic_id')}`,
-  }))
-    .get()
-    .filter(x => x.id) : [];
+
+  return !condition
+    ? $('#tor-tbl tbody')
+        .find('tr')
+        .map((_, track) => ({
+          id: $(track).find('td.t-title .t-title a').attr('data-topic_id'),
+          status: translate[$(track).find('td:nth-child(2)').attr('title')],
+          title: $(track).find('td.t-title .t-title a').text(),
+          author: $(track).find('td.u-name .u-name a ').text(),
+          category: {
+            id: $(track).find('td.f-name .f-name a').attr('href').replace(/.*?f=([0-9]*)$/g, '$1'),
+            name: $(track).find('td.f-name .f-name a').text(),
+          },
+          size: +$(track).find('td.tor-size u').html(),
+          seeds: +$(track).find('b.seedmed').html(),
+          leechs: +$(track).find('td.leechmed b').html(),
+          downloads: +$(track).find('td.number-format').html(),
+          uploadDate: formatDate($(track).find('td:last-child p').text()),
+          url: `http://${host}/forum/viewtopic.php?t=${$(track).find('td.t-title .t-title a').attr('data-topic_id')}`,
+        }))
+        .get()
+        .filter(x => x.id)
+    : [];
 };
 
 // Get count of pages
 export const getCountOfPages = (html) => {
   const $ = cheerio.load(html);
   const isOnlyOnePage = Boolean($('#main_content_wrap .bottom_info .nav p[style="float: right"]').text());
+
   return {
-    count: isOnlyOnePage ? +$('#main_content_wrap .bottom_info .nav p[style="float: right"]')
-      .text()
-      .replace(/(.*), ([0-9]*).*$/g, '$2') : 1,
-    id: isOnlyOnePage ? $('#main_content_wrap .bottom_info .nav p[style="float: right"] a:first-child')
-      .attr('href')
-      .replace(/.*search_id=(.*)&start.*$/g, '$1') : 1,
+    count: isOnlyOnePage
+      ? +$('#main_content_wrap .bottom_info .nav p[style="float: right"]')
+        .text()
+        .replace(/(.*), ([0-9]*).*$/g, '$2')
+      : 1,
+    id: isOnlyOnePage
+      ? $($('#main_content_wrap .bottom_info .nav p:nth-child(2) a')[1])
+        .attr('href')
+        .replace(/.*search_id=(.*)&.*$/g, '$1')
+      : 1,
   };
 };
 
@@ -144,8 +157,8 @@ export const sortBy = (data, by, direction) => {
         : data.sort((a, b) => b[by] - a[by]);
     case 'date':
       return direction
-        ? data.sort((a, b) => new Date(`${a.date.day}-${a.date.month}-${a.date.year}`) > new Date(`${b.date.day}-${b.date.month}-${b.date.year}`) ? 1 : -1)
-        : data.sort((a, b) => new Date(`${a.date.day}-${a.date.month}-${a.date.year}`) > new Date(`${b.date.day}-${b.date.month}-${b.date.year}`) ? -1 : 1);
+        ? data.sort((a, b) => a.uploadDate > b.uploadDate ? 1 : -1)
+        : data.sort((a, b) => a.uploadDate > b.uploadDate ? -1 : 1);
     case 'title':
       return direction
         ? data.sort((a, b) => a.title > b.title ? -1 : 1)
