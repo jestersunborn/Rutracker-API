@@ -1,8 +1,8 @@
-import { request } from 'http';
-import { stringify } from 'querystring';
-import { decode } from 'windows-1251';
+const { request } = require('http');
+const { stringify } = require('querystring');
+const { decode } = require('windows-1251');
 
-import {
+const {
   HOST,
   LOGIN_PATH,
   SEARCH_PATH,
@@ -10,22 +10,34 @@ import {
   FULL_INFO_PATH,
   INDEX_PATH,
   USER_PATH,
-} from './constants';
+} = require('./config');
 
-import {
-  getCountOfPages,
+const {
+  parsePageInfo,
   parseSearch,
   parseFullInfo,
   parseCategories,
-  sortBy,
   parseCaptcha,
   parseUserInfo,
   parseStats,
-} from './helpers';
+} = require('./lib/parsers');
 
-export default class RutrackerApi {
-  constructor(cookie) {
-    this.cookie = cookie || null;
+const SortType = {
+  DATE: 'date',
+  DOWNLOADS: 'downloads',
+  LEECHS: 'leechs',
+  SEEDS: 'seeds',
+  SIZE: 'size',
+  TITLE: 'title',
+};
+
+class RutrackerApi {
+  constructor(optCookie) {
+    this.cookie = optCookie;
+    this.captcha = undefined;
+    this.query = undefined;
+    this.direction = undefined;
+    this.by = undefined;
   }
 
   getCaptcha() {
@@ -71,16 +83,16 @@ export default class RutrackerApi {
   }
 
   // Login method
-  login(username, password, answer) {
+  login(username, password, optAnswer) {
     return new Promise((resolve, reject) => {
       // User data
-      const postData = answer
+      const postData = optAnswer
         ? stringify({
             login_username: username,
             login_password: password,
             login: 'Вход',
             cap_sid: this.captcha.capSid,
-            [this.captcha.code]: answer,
+            [this.captcha.code]: optAnswer,
           })
         : stringify({
             login_username: username,
@@ -138,7 +150,7 @@ export default class RutrackerApi {
             });
             res.on('end', () => {
               const parsed = parseSearch(data, HOST);
-              const sorted = sortBy(parsed, this.by, this.direction);
+              const sorted = this._sortBy(parsed, this.by, this.direction);
               resolve(sorted);
             });
           } else {
@@ -181,7 +193,7 @@ export default class RutrackerApi {
             data += decode(x, { mode: 'html' });
           });
           res.on('end', () => {
-            const { count, id } = getCountOfPages(data, HOST);
+            const { count, id } = parsePageInfo(data, HOST);
 
             Promise.all(this.fetchPagination(count, id))
               .then(res => res.reduce((acc, c) => [...acc, ...c], []))
@@ -347,4 +359,29 @@ export default class RutrackerApi {
       req.end();
     });
   }
+
+  // TODO: wtf with the eslint?
+  _sortBy(data, by, direction) {
+    switch (by) {
+      case SortType.SIZE:
+      case SortType.SEEDS:
+      case SortType.LEECHS:
+      case SortType.DOWNLOADS:
+        return direction
+          ? data.sort((a, b) => a[by] - b[by])
+          : data.sort((a, b) => b[by] - a[by]);
+      case SortType.DATE:
+        return direction
+          ? data.sort((a, b) => a.uploadDate > b.uploadDate ? 1 : -1)
+          : data.sort((a, b) => a.uploadDate > b.uploadDate ? -1 : 1);
+      case SortType.TITLE:
+        return direction
+          ? data.sort((a, b) => a.title > b.title ? -1 : 1)
+          : data.sort((a, b) => a.title > b.title ? 1 : -1);
+      default:
+        return data;
+    }
+  }
 }
+
+module.exports = RutrackerApi;

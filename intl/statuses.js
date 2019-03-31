@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   проверено: 'approved',
   сомнительно: 'doubtfully',
   'не проверено': 'not-approved',
