@@ -360,7 +360,6 @@ class RutrackerApi {
     });
   }
 
-  // TODO: wtf with the eslint?
   _sortBy(data, by, direction) {
     switch (by) {
       case SortType.SIZE:
