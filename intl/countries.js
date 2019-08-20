@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   'Антигуа и Барбуда': 'Antigua and Barbuda',
   'Босния и Герцеговина': 'Bosnia and Herzegovina',
   'Буркина-Фасо': 'Burkina Faso',

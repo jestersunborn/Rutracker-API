@@ -2,16 +2,15 @@
   "extends": "airbnb-base",
   "rules": {
     "no-console": "off",
-    "import/prefer-default-export": "off",
     "quotes": "off",
     "no-confusing-arrow": "off",
     "indent": "off",
-    "no-shadow": "off"
+    "no-shadow": "off",
+    "no-underscore-dangle": "off"
   },
   "overrides": [
     {
-      "files": ["src/index.js", "test/test.js"],
-      "excludedFiles": "build/index.js"
+      "files": ["src/index.js", "test/test.js"]
     }
   ]
 }
